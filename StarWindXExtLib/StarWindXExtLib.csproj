@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>8a7382e6-e1f4-4861-b519-0f52ca565286</ProjectGuid>
+    <ProjectGuid>{8A7382E6-E1F4-4861-B519-0F52CA565286}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>StarWindXExtLib</RootNamespace>
@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -28,26 +29,123 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>latest</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System"/>
-    
-    <Reference Include="System.Core"/>
-    <Reference Include="System.Xml.Linq"/>
-    <Reference Include="System.Data.DataSetExtensions"/>
-    
-    
-    <Reference Include="Microsoft.CSharp"/>
-    
-    <Reference Include="System.Data"/>
-    
-    <Reference Include="System.Net.Http"/>
-    
-    <Reference Include="System.Xml"/>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="ExtClasses\ControlInterface.cs" />
+    <Compile Include="ExtClasses\Interfaces\IControlInterface.cs" />
+    <Compile Include="ParamClasses\Interfaces\IScheduler.cs" />
+    <Compile Include="ParamClasses\Interfaces\IServerCommand.cs" />
+    <Compile Include="ParamClasses\HAPartnerAdder.cs" />
+    <Compile Include="ParamClasses\AdvancedHADeviceCreator.cs" />
+    <Compile Include="ParamClasses\Interfaces\IAdvancedHADeviceCreator.cs" />
+    <Compile Include="ParamClasses\AdvancedHANodes.cs" />
+    <Compile Include="ParamClasses\HAImageHeaderCreator.cs" />
+    <Compile Include="ParamClasses\Interfaces\IAdvancedHANodes.cs" />
+    <Compile Include="ParamClasses\Interfaces\IHAImageHeaderCreator.cs" />
+    <Compile Include="ParamClasses\AdvancedHANode.cs" />
+    <Compile Include="Attributes\BoolToStringcs.cs" />
+    <Compile Include="Attributes\EnableParam.cs" />
+    <Compile Include="Attributes\IntZero.cs" />
+    <Compile Include="Attributes\ParamValueAsName.cs" />
+    <Compile Include="ParamClasses\Interfaces\IAdvancedHANode.cs" />
+    <Compile Include="ParamClasses\HATask.cs" />
+    <Compile Include="ParamClasses\Interfaces\IHATask.cs" />
+    <Compile Include="ParamClasses\HAInterfaceEditor.cs" />
+    <Compile Include="ParamClasses\Interfaces\IHAInterfaceEditor.cs" />
+    <Compile Include="ParamClasses\ServerControl.cs" />
+    <Compile Include="ParamClasses\Interfaces\IServerControl.cs" />
+    <Compile Include="ParamClasses\HADeviceCreator.cs" />
+    <Compile Include="Enums\InitializaMethod.cs" />
+    <Compile Include="ParamClasses\HANodeParam.cs" />
+    <Compile Include="ParamClasses\Interfaces\IHADeviceCreator.cs" />
+    <Compile Include="ParamClasses\Interfaces\IHANodeParam.cs" />
+    <Compile Include="ParamClasses\CacheParam.cs" />
+    <Compile Include="Enums\CacheFormat.cs" />
+    <Compile Include="ExtClasses\CollectionExt.cs" />
+    <Compile Include="Enums\CacheType.cs" />
+    <Compile Include="ExtClasses\DeviceExt.cs" />
+    <Compile Include="Enums\EnumFormat.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="Enums\FailoverConfType.cs" />
+    <Compile Include="ExtClasses\HANetworkInterface.cs" />
+    <Compile Include="ExtClasses\HADeviceExt.cs" />
+    <Compile Include="ExtClasses\Interfaces\IHANetworkInterface.cs" />
+    <Compile Include="ExtClasses\Interfaces\IHADeviceExt.cs" />
+    <Compile Include="ExtClasses\Interfaces\IDeviceExt.cs" />
+    <Compile Include="ExtClasses\Interfaces\ILSFSDeviceExt.cs" />
+    <Compile Include="ExtClasses\LSFSDeviceExt.cs" />
+    <Compile Include="Enums\NodeType.cs" />
+    <Compile Include="Attributes\FlatParam.cs" />
+    <Compile Include="Attributes\IConditional.cs" />
+    <Compile Include="Attributes\Param.cs" />
+    <Compile Include="ParamClasses\Interfaces\IImageDeviceCreator.cs" />
+    <Compile Include="ParamClasses\Interfaces\ILsfsDeviceCreatorcs.cs" />
+    <Compile Include="ParamClasses\ImageDeviceCreator.cs" />
+    <Compile Include="ParamClasses\Interfaces\ISimpleDeviceCreator.cs" />
+    <Compile Include="ParamClasses\LsfsDeviceCreator.cs" />
+    <Compile Include="ParamClasses\Interfaces\IFlashCache.cs" />
+    <Compile Include="ParamClasses\DDFileCreator.cs" />
+    <Compile Include="ParamClasses\ImageFileCreator.cs" />
+    <Compile Include="ParamClasses\Interfaces\ICache.cs" />
+    <Compile Include="ParamClasses\Interfaces\ICacheParam.cs" />
+    <Compile Include="ParamClasses\Interfaces\IDDFileCreator.cs" />
+    <Compile Include="ParamClasses\Interfaces\IFileCreator.cs" />
+    <Compile Include="ParamClasses\Interfaces\IImageFileCreator.cs" />
+    <Compile Include="ParamClasses\Interfaces\ITargetCreator.cs" />
+    <Compile Include="ParamClasses\Interfaces\IRamDeviceCreator.cs" />
+    <Compile Include="ParamClasses\Interfaces\IDeviceCreator.cs" />
+    <Compile Include="ParamClasses\Interfaces\ISectorSize.cs" />
+    <Compile Include="ParamClasses\Interfaces\IAppender.cs" />
+    <Compile Include="ParamClasses\ParameterAppender.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Attributes\StringValue.cs" />
+    <Compile Include="Attributes\SubParam.cs" />
+    <Compile Include="ParamClasses\RamDeviceCreator.cs" />
+    <Compile Include="ParamClasses\TargetCreator.cs" />
+    <Compile Include="ParamClasses\Scheduler.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="StarWindXLib">
+      <Guid>{FCD669E9-5B7B-48B0-B086-D1E6DC02BDD8}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
- </Project>
+</Project>
