@@ -7,24 +7,25 @@ namespace StarWindXExtLib {
 
         public LSFSDeviceExt(ILSFSDevice lsfs) : base(lsfs) {
             lsfsDevice = lsfs;
-        }
+        }        
 
+        [Display(1000, "Deduplication Ratio")]
         public string DeduplicationRatio => lsfsDevice.DeduplicationRatio;
-
+        [Display(1001, "User Data Size")]
         public string UserDataSize => lsfsDevice.UserDataSize;
-
+        [Display(1002, "Meta Data Size")]
         public string MetaDataSize => lsfsDevice.MetaDataSize;
-
+        [Display(1003, "Allocated Physical Size")]
         public string AllocatedPhysicalSize => lsfsDevice.AllocatedPhysicalSize;
-
+        [Display(1004, "Device Fragmented Percent")]
         public string DeviceFragmentedPercent => lsfsDevice.DeviceFragmentedPercent;
-
+        [Display(1005, "Deduplication Enabled")]
         public bool DeduplicationEnabled => GetPropertyValue("DeduplicationEnabled") == "yes";
-
+        [Display(1006, "Is Device A Snapshot")]
         public bool IsDeviceASnapshot => GetPropertyValue("IsDeviceASnapshot") == "yes";
-
+        [Display(1007, "Snapshot In Progress")]
         public bool SnapshotInProgress => GetPropertyValue("SnapshotInProgress") == "yes";
-
+        [Display(1008, "Mount Status String")]
         private string MountStatusString => GetPropertyValue("MountStatus");
 
         private SW_LSFS_MOUNT_STATUS GetMountStatus() {
@@ -35,6 +36,7 @@ namespace StarWindXExtLib {
             }
         }
 
+        [Display(1009, "Mount Status")]
         public SW_LSFS_MOUNT_STATUS MountStatus => GetMountStatus();
 
         private string ModeString => GetPropertyValue("mode");
@@ -47,17 +49,24 @@ namespace StarWindXExtLib {
             }
         }
 
+        [Display(1010)]
         public SW_LSFS_MODE Mode => GetMode();
 
+        [Display(1011, "Block Size")]
         public int BlockSize => GetPropertyValueAsInt("BlockSize");
-
+        [Display(1012, "Snapshot Offset")]
         public int SnapshotOffset => GetPropertyValueAsInt("SnapshotOffset");
+        [Display(1013, "Snapshot Name")]
         public string SnapshotName => GetPropertyValue("SnapshotName");
+        [Display(1014, "Snapshot Time")]
         public DateTime? SnapshotTime => GetPropertyValueAsDateTime("SnapshotTime");
         public string PMCacheMode => GetPropertyValue("PMCacheMode");
+        [Display(1015, "PM Cache Type")]
         public CacheType PMCacheType => EnumFormat.ToCacheType(PMCacheMode);
+        [Display(1016, "PM Cache Size MB")]
         public int PMCacheSizeMB => GetPropertyValueAsInt("PMCacheSizeMB");
         public string L2CacheMode => GetPropertyValue("L2CacheMode");
+        [Display(1017, "L2 Cache Type")]
         public CacheType L2CacheType => EnumFormat.ToCacheType(L2CacheMode);  
     }
 }

@@ -15,7 +15,10 @@ namespace StarWindXExtLib {
         public void MarkAsSynchronized() {
             haDevice.MarkAsSynchronized();
         }
+
+        [Obsolete("Use \"PartnerExt\"")]
         public ICollection Partners => haDevice.Partners;
+
         private ICollection GetChannels(NetworkInterfaceType type) {
             var infs = new CollectionExt();
             var name = type == NetworkInterfaceType.Synchronization ? "sync" : "heartbeat";
@@ -42,19 +45,20 @@ namespace StarWindXExtLib {
             } catch (Exception) { }
         }
 
-        public ICollection SynchronizationChannels => GetChannels(NetworkInterfaceType.Synchronization);
-
+        [Display(2000, "Synchronization Channels", CollecionType = typeof(IHANetworkInterface))]
+        public ICollection SynchronizationChannels => GetChannels(NetworkInterfaceType.Synchronization);     
+        [Display(2001, "Heartbeat Channels", CollecionType = typeof(IHANetworkInterface))]
         public ICollection HeartbeatChannels => GetChannels(NetworkInterfaceType.Heartbeat);
 
-
+        [Display(2002, "Sync Status")]
         public SW_HA_SYNC_STATUS SyncStatus => haDevice.SyncStatus;
-
+        [Display(2003, "Sync Traffic Share")]
         public int SyncTrafficShare { get => haDevice.SyncTrafficShare; set => haDevice.SyncTrafficShare = value; }
-
+        [Display(2004, "Wait On Autosynch")]
         public bool WaitOnAutosynch => GetPropertyValue("ha_wait_on_autosynch") == "1";
-
+        [Display(2005, "Parner Nodes Count")]
         public int ParnerNodesCount => GetPropertyValueAsInt("ha_partner_nodes_count");
-
+        [Display(2006, "Maintenance Mode")]
         public bool MaintenanceMode => GetPropertyValue("ha_maintenance_mode") == "1";
 
         public string GetPartnerTargetName(int node) {
@@ -117,7 +121,7 @@ namespace StarWindXExtLib {
             return GetPartnerParameter("tracker_frozen", node) == "yes";
         }
 
-        public string GetPartnerTrackerSnpshotStorage(int node) {
+        public string GetPartnerTrackerSnapshotStorage(int node) {
             return GetPartnerParameter("tracker_snapshots_storage", node);
         }
 
@@ -141,39 +145,88 @@ namespace StarWindXExtLib {
             return GetPropertyValueAsDateTime("ha_partner_node" + node.ToString() + "_" + value);
         }
 
+        [Display(2007)]
         public bool Buffering => GetPropertyValue("buffering") == "yes";
+        [Display(2008)]
         public bool Asyncmode => GetPropertyValue("asyncmode") == "yes";
+        [Display(2009)]
         public bool Readonly => GetPropertyValue("readonly") == "yes";
+        [Display(2010)]
         public bool Highavailability => GetPropertyValue("highavailability") == "yes";
 
+        [Display(2011, "Node Removed From Partners")]
         public bool NodeRemovedFromPartners => GetPropertyValue("ha_is_node_removed_from_partners") == "yes";
+        [Display(2012, "Storage Extend Supported")]
         public bool StorageExtendSupported => GetPropertyValue("ha_is_storage_extend_supported") == "yes";
+        [Display(2013, "Storage Snapshot Supported")]
         public bool StorageSnapshotSupported => GetPropertyValue("ha_is_storage_snapshot_supported") == "yes";
+        [Display(2014, "Storage Device Ready")]
         public bool StorageDeviceReady => GetPropertyValue("ha_is_storage_device_ready") == "yes";
+        [Display(2015, "Storage Device Readonly")]
         public bool StorageDeviceReadonly => GetPropertyValue("ha_is_storage_device_readonly") == "yes";
+        [Display(2016, "SMIS Hidden")]
         public bool SMISHidden => GetPropertyValue("ha_is_SMISHidden") == "yes";
+        [Display(2017, "Autosync Enabled")]
         public bool AutosyncEnabled => GetPropertyValue("ha_autosynch_enabled") == "yes";
+        [Display(2018)]
         public bool Tracker => GetPropertyValue("ha_tracker") == "yes";
+        [Display(2019, "Tracker Frozen")]
         public bool TrackerFrozen => GetPropertyValue("ha_tracker_frozen") == "yes";
 
+        [Display(2020, "SyncT ype")]
         public string SyncType => GetPropertyValue("ha_synch_type");
+        [Display(2021, "Sync Elapsed Time")]
         public string SyncElapsedTime => GetPropertyValue("ha_sync_elapsed_time");
+        [Display(2022, "Sync Estimated Time")]
         public string SyncEstimatedTime => GetPropertyValue("ha_sync_estimated_time");
+        [Display(2023)]
         public string Priority => GetPropertyValue("ha_priority");
+        [Display(2024, "Auto Sync Priority")]
         public string AutoSyncPriority => GetPropertyValue("ha_auto_sync_priority");
+        [Display(2025, "ALUA Group Node State")]
         public string ALUAGroupNodeState => GetPropertyValue("ha_alua_group_node_state");
 
+        [Display(2026, "Tracker Snapshots Storage")]
         public string TrackerSnapshotsStorage => GetPropertyValue("ha_tracker_snapshots_storage");
+        [Display(2027, "Tracker Mount Time")]
         public string TrackerMountTime => GetPropertyValue("ha_tracker_mount_time");
+        [Display(2028, "Tracker Mount Snapshot")]
         public string TrackerMountSnapshot => GetPropertyValue("ha_tracker_mount_snapshot");
+        [Display(2029, "Tracker Status")]
         public string TrackerStatus => GetPropertyValue("ha_tracker_status");
+        [Display(2030, "Tracker Pending")]
         public string TrackerPending => GetPropertyValue("ha_tracker_pending");
+        [Display(2031, "Tracker Replicated")]
         public DateTime? TrackerReplicated => GetPropertyValueAsDateTime("ha_tracker_replicated");
+        [Display(2032, "Tracker Replicating")]
         public string TrackerReplicating => GetPropertyValue("ha_tracker_replicating");
+        [Display(2033, "Tracker Scheduled")]
         public DateTime? TrackerScheduled => GetPropertyValueAsDateTime("ha_tracker_scheduled");
 
+        [Display(2034, "Node Type")]
         public NodeType NodeType => (NodeType)GetPropertyValueAsInt("ha_node_type");
+        [Display(2035, "Failover Config Type")]
         public FailoverConfType FailoverConfigType => (FailoverConfType)GetPropertyValueAsInt("ha_failover_config_type");
+
+        [Display(2036, "Partners", CollecionType = typeof(IHAPartnerExt))]
+        public ICollection PartnersExt => GetPartnersExt();
+
+        private ICollection partnersExt;
+
+        private int lastPartnerCount = 0;
+
+        private ICollection GetPartnersExt() {
+            if (UpdateNeeded && lastPartnerCount != ParnerNodesCount) {
+                var collection = new CollectionExt();
+                for (int i = 1; i <= ParnerNodesCount; i++) {
+                    collection.Add(new HAParnerExt(this, i));
+                }
+                partnersExt = collection;
+                UpdateNeeded = false;
+                lastPartnerCount = ParnerNodesCount;
+            }
+            return partnersExt;
+        }         
 
         public void RemovePartner(string TargetName) {
             haDevice.RemovePartner(TargetName);
@@ -198,9 +251,9 @@ namespace StarWindXExtLib {
             pars.AppendParam("GetOwnAndPartnersControlInterfaces", "");
             server.ExecuteCommandEx(STARWIND_COMMAND_TYPE.STARWIND_CONTROL_REQUEST, "", pars, out ICommandResult result);
             var collection = new CollectionExt();
-            for (int i = 0; i < ParnerNodesCount; i++) {
+            for (int i = 0; i <= ParnerNodesCount; i++) {
                 collection.Add(new ControlInterface(result, i));
-            }      
+            }
             return collection;
         }
     }

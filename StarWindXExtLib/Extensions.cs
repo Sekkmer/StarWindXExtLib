@@ -80,13 +80,13 @@ namespace StarWindXExtLib {
             server.ExecuteCommand(STARWIND_COMMAND_TYPE.STARWIND_CONTROL_REQUEST, "", pars);
         }
 
-        public static IDevice CreateDevice(this IStarWindServer server, IDeviceCreator creator) {               
+        public static IDevice CreateDevice(this IStarWindServer server, IDeviceCreator creator) {
             return server.CreateDevice(creator.Path, creator.Name, creator.DeviceType, creator.GenerateParams());
         }
 
         public static void CreateFile(this IStarWindServer server, IFileCreator creator) {
             server.CreateFile(creator.Path, creator.Name, creator.FileType, creator.GenerateParams());
-        }   
+        }
 
         public static ITarget CreateTarget(this IStarWindServer server, ITargetCreator creator) {
             creator.GetServerName = () => server.GetHostName();
@@ -143,6 +143,10 @@ namespace StarWindXExtLib {
                 outCollection.Add(trans(element));
             }
             return outCollection;
+        }
+
+        public static T Item<T>(this ICollection collection, object index) {
+            return (T)collection.Item(index);
         }
     }
 }

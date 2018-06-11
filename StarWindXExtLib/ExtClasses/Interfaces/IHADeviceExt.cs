@@ -20,7 +20,7 @@ namespace StarWindXExtLib {
         string GetPartnerSyncElapsedTime(int node);
         string GetPartnerSyncEstimatedTime(int node);
         bool GetPartnerTrackerFrozen(int node);
-        string GetPartnerTrackerSnpshotStorage(int node);
+        string GetPartnerTrackerSnapshotStorage(int node);
         DateTime? GetPartnerTrackerMountTime(int node);
         string GetPartnerTrackerMountSnapshot(int node);
         string GetPartnerParameter(string value, int node);
@@ -57,5 +57,7 @@ namespace StarWindXExtLib {
         IServerControl AddPartnerInterface(IHANetworkInterface iface, int priority);
         IServerControl RemovePartnerInterface(IHANetworkInterface iface);
         ICollection GetOwnAndPartnersControlInterfaces(IStarWindServer server);
+
+        ICollection PartnersExt { get; }
     }
 }

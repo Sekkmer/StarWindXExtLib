@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using StarWindXLib;
 
 namespace StarWindXExtLib {
 
-    internal class ControlInterface : IControlInterface {
+    internal class ControlInterface : Displayable, IControlInterface {
+        [Display(0, "HostName")]
         public string HostName { get; }
+        [Display(1, "Net Interfaces")]
         public List<string> NetInterfaces { get; }
+        [Display(2)]
         public int Port { get; }
+
+        public override string UniqueId => HostName;
 
         public ControlInterface(ICommandResult result, int partnerId) {
             string prefix = partnerId == 0 ? "CurrentNode" : "PartnerNode";

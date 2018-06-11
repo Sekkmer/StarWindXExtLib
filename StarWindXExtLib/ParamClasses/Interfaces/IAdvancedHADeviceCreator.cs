@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace StarWindXExtLib {
-    public interface IAdvancedHADeviceCreator : IAppender, ICache {
+﻿namespace StarWindXExtLib {
+    public interface IAdvancedHADeviceCreator : IServerAdd, ICache {
         string DeviceName { get; set; }
         string OwnTargetName { get; }
         string HeaderFile { get; }

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 namespace StarWindXExtLib {
-    internal class CollectionExt : StarWindXLib.ICollection {
+    public class CollectionExt : StarWindXLib.ICollection {
         private List<dynamic> list = new List<dynamic>();
 
         public dynamic Item(object index) {
