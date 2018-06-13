@@ -6,11 +6,13 @@ using StarWindXLib;
 namespace StarWindXExtLib {
     public interface IDisplayable {
         string UniqueId { get; }
+        void WriteUnorder(DisplayWriter writer);
+        int GetDisplayPropertiesCount(bool countCollections);
     }
 
     public abstract class DisplayWriter {
         public abstract void Write(string data);
-        public abstract void Write(string name, object value);   
+        public abstract void Write(string name, object value);
 
         public bool IsEnabled(Type parent, DisplayAttribute disp) {
             if (Skip.ContainsKey(parent)) {
@@ -79,7 +81,8 @@ namespace StarWindXExtLib {
                 var value = info.GetValue(obj);
                 if (info.GetCustomAttribute<DisplayAttribute>(true) is var attr) {
                     if (writer.IsEnabled(obj.GetType(), attr)) { continue; }
-                    if (value is ICollection collection && writer.WriteCollections) {
+                    if (value is ICollection collection) {
+                        if (!writer.WriteCollections) { continue; }
                         writer.Write("Collection " + attr.Name, attr.CollecionType.ToString());
                         foreach (object sub in collection) {
                             WriteUnorder(writer, sub);
@@ -90,6 +93,22 @@ namespace StarWindXExtLib {
                     }
                 }
             }
+        }
+
+        public int GetDisplayPropertiesCount(bool countCollections) {
+            var properties = GetType().GetProperties();
+            int count = 0; 
+            foreach (var info in properties) {
+                if (!info.CanRead) { continue; }
+                var value = info.GetValue(this);
+                if (info.GetCustomAttribute<DisplayAttribute>(true) is var attr) {
+                    if (value is ICollection collection) {
+                        if (!countCollections) { continue; }
+                    }
+                    count++;
+                }
+            }
+            return count;
         }
     }
 }

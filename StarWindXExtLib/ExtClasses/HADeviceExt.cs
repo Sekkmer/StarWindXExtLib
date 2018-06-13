@@ -238,7 +238,6 @@ namespace StarWindXExtLib {
 
         public IServerControl RemovePartnerInterface(IHANetworkInterface iface) {
             return new HAInterfaceEditor(this, iface) { ActionIsAdd = false };
-            // pars.AppendParam("Priority", priority.ToString());
         }
 
         public IServerControl AddPartnerInterface(IHANetworkInterface iface, int priority) {

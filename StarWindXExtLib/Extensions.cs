@@ -68,7 +68,7 @@ namespace StarWindXExtLib {
             return server.CreateDevice(path, name, STARWIND_DEVICE_TYPE.STARWIND_DD_LSFS_DEVICE, pars);
         }
 
-        [Obsolete("Curently not working: StarWindX issue with ParametersClass", true)]
+        [Obsolete("Curently not working: StarWindX issue with ParametersClass", false)]
         public static void MountSnapshot(this IStarWindServer server, IHADevice device, ISnapshot snapshot, ITarget target = null) {
             var pars = new Parameters();
             pars.AppendParam("MountSnapshot", snapshot.Id.ToString());

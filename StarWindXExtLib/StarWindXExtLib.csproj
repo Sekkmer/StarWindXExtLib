@@ -63,11 +63,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\Display.cs" />
+    <Compile Include="ExtClasses\ServerValueClasses\AbstactValue.cs" />
+    <Compile Include="ExtClasses\ServerValueClasses\BoolValue.cs" />
     <Compile Include="ExtClasses\ControlInterface.cs" />
     <Compile Include="ExtClasses\Displayable.cs" />
     <Compile Include="ExtClasses\HAParnerExt.cs" />
+    <Compile Include="ExtClasses\ServerValueClasses\IInnerServer.cs" />
     <Compile Include="ExtClasses\Interfaces\IControlInterface.cs" />
     <Compile Include="ExtClasses\Interfaces\IHAPartnerExt.cs" />
+    <Compile Include="ExtClasses\ServerValueClasses\IntValue.cs" />
+    <Compile Include="ExtClasses\Interfaces\IStarWindServerExt.cs" />
+    <Compile Include="ExtClasses\ServerValueClasses\IValue.cs" />
+    <Compile Include="ExtClasses\StarWindServerExt.cs" />
+    <Compile Include="ExtClasses\ServerValueClasses\StringValue.cs" />
     <Compile Include="ParamClasses\Interfaces\IServerAdd.cs" />
     <Compile Include="ParamClasses\Interfaces\IScheduler.cs" />
     <Compile Include="ParamClasses\Interfaces\IServerCommand.cs" />
