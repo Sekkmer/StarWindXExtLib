@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 namespace StarWindXExtLib {
+
     public interface IAdvancedHANodes : IAppender {
         string Priority { get; }
         string NodeType { get; }

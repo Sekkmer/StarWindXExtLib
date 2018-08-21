@@ -1,8 +1,10 @@
-﻿using System;
+﻿using StarWindXLib;
+
+using System;
 using System.Collections.Generic;
-using StarWindXLib;
 
 namespace StarWindXExtLib {
+
     public interface ITargetCreator : IAppender {
         string Alias { get; set; }
         string Name { get; set; }

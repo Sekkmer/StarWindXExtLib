@@ -1,17 +1,23 @@
-﻿using System;
+﻿using StarWindXLib;
+
+using System;
 using System.Collections.Generic;
 using System.Reflection;
-using StarWindXLib;
 
 namespace StarWindXExtLib {
+
     public interface IDisplayable {
         string UniqueId { get; }
+
         void WriteUnorder(DisplayWriter writer);
+
         int GetDisplayPropertiesCount(bool countCollections);
     }
 
     public abstract class DisplayWriter {
+
         public abstract void Write(string data);
+
         public abstract void Write(string name, object value);
 
         public bool IsEnabled(Type parent, DisplayAttribute disp) {
@@ -27,7 +33,7 @@ namespace StarWindXExtLib {
 
         protected static string ToString(object obj) {
             if (obj is List<string> list) {
-                return String.Join(StringJoinDelimer, list);
+                return string.Join(StringJoinDelimer, list);
             } else {
                 return obj.ToString();
             }
@@ -37,6 +43,7 @@ namespace StarWindXExtLib {
     }
 
     public abstract class LineDisplayWriter : DisplayWriter {
+
         public override void Write(string data) {
             WriteLine(data);
         }
@@ -62,6 +69,7 @@ namespace StarWindXExtLib {
     }
 
     public class ConsoreDisplayWriter : LineDisplayWriter {
+
         public override void WriteLine(string line) {
             Console.WriteLine(line);
         }
@@ -84,7 +92,7 @@ namespace StarWindXExtLib {
                     if (value is ICollection collection) {
                         if (!writer.WriteCollections) { continue; }
                         writer.Write("Collection " + attr.Name, attr.CollecionType.ToString());
-                        foreach (object sub in collection) {
+                        foreach (var sub in collection) {
                             WriteUnorder(writer, sub);
                         }
                         writer.Write("Collection " + attr.Name + " End");
@@ -97,7 +105,7 @@ namespace StarWindXExtLib {
 
         public int GetDisplayPropertiesCount(bool countCollections) {
             var properties = GetType().GetProperties();
-            int count = 0; 
+            var count = 0;
             foreach (var info in properties) {
                 if (!info.CanRead) { continue; }
                 var value = info.GetValue(this);

@@ -2,16 +2,20 @@
 using System.Collections.Generic;
 
 namespace StarWindXExtLib {
+
     public class HAPartnerAdder : ParameterAppender, IAdvancedHANodes, IServerControl {
         public string SendTo => Device.DeviceId;
 
         public string Request => "AddPartner";
 
         [Param] public string Priority { get; private set; }
+
         [Param("nodeType")]
         public string NodeType { get; private set; }
+
         [Param("PartnerTargetName")]
         public string TargetName { get; private set; }
+
         [Param(false, "JournalStorages")]
         public string JournalStorage { get; private set; }
 
@@ -25,8 +29,8 @@ namespace StarWindXExtLib {
         [Param("Replicator")]
         public string ReplicatorString {
             get {
-                string str = "";
-                for (int i = 1; i <= Nodes.Count; i++) {
+                var str = "";
+                for (var i = 1; i <= Nodes.Count; i++) {
                     if (i > 1) { str += ";"; }
                     str += "#p" + i.ToString() + "=" + Replicator.ToString();
                 }
@@ -50,9 +54,9 @@ namespace StarWindXExtLib {
             Nodes = nodes;
             ConcatAllValues();
             PartnerIP = "";
-            for (int i = 1; i < Count; i++) {
+            for (var i = 1; i < Count; i++) {
                 if (i > 2 && i < Count - 1) { PartnerIP += ";"; }
-                PartnerIP += "#p" + i.ToString() + "=" + String.Join(",", First.PartnerIP[nodes[i].NodeId]);
+                PartnerIP += "#p" + i.ToString() + "=" + string.Join(",", First.PartnerIP[nodes[i].NodeId]);
             }
         }
 
@@ -70,8 +74,8 @@ namespace StarWindXExtLib {
 
         private void ConcatAllValues() {
             foreach (var name in ConcatAll) {
-                string value = "";
-                for (int index = 1; index < Count; index++) {
+                var value = "";
+                for (var index = 1; index < Count; index++) {
                     if (index > 2 && index < Count - 1) { value += ";"; }
                     value += "#p" + index.ToString() + "=" + First.GetValue(name);
                     index++;

@@ -1,14 +1,19 @@
 ﻿namespace StarWindXExtLib {
+
     public enum NetworkInterfaceType {
+
         [StringValue("unknown")]
         Unknown,
+
         [StringValue("sync")]
         Synchronization,
+
         [StringValue("heartbeat")]
         Heartbeat
     }
 
     public static partial class EnumFormat {
+
         public static string ToString(this NetworkInterfaceType format) {
             return EnumToString(format);
         }

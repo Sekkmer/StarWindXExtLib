@@ -2,8 +2,8 @@
 using System.Runtime.CompilerServices;
 
 namespace StarWindXExtLib {
-    public class DisplayAttribute : Attribute {
 
+    public class DisplayAttribute : Attribute {
         public int Index { get; }
         public string Name { get; }
 

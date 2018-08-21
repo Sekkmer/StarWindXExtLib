@@ -1,6 +1,7 @@
 ﻿using System;
 
 namespace StarWindXExtLib {
+
     [AttributeUsage(AttributeTargets.Property)]
     public class BoolToStringAttribute : Attribute {
         public string TrueString { get; }

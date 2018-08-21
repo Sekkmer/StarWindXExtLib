@@ -2,7 +2,9 @@
 using System.Reflection;
 
 namespace StarWindXExtLib {
+
     public static partial class EnumFormat {
+
         public static string EnumToString(object obj) {
             if (obj.GetType().GetField(obj.ToString()).GetCustomAttribute<StringValueAttribute>() is var attr) {
                 return attr.Value;
@@ -11,11 +13,13 @@ namespace StarWindXExtLib {
         }
 
         public static void EnumFromString(object obj, string str) {
-            Type type = obj.GetType();
-            if (type.BaseType != typeof(Enum))
+            var type = obj.GetType();
+            if (type.BaseType != typeof(Enum)) {
                 throw new ArgumentException("obj must be of type System.Enum");
+            }
+
             str = str.ToLower();
-            foreach (object value in Enum.GetValues(type)) {
+            foreach (var value in Enum.GetValues(type)) {
                 if (type.GetField(value.ToString()).GetCustomAttribute<StringValueAttribute>() is var attr) {
                     obj = value;
                     return;

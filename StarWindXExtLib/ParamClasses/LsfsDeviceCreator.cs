@@ -1,7 +1,9 @@
-﻿using System;
-using StarWindXLib;
+﻿using StarWindXLib;
+
+using System;
 
 namespace StarWindXExtLib {
+
     public class LsfsDeviceCreator : ParameterAppender, ILsfsDeviceCreator {
         public string Path => File.Path;
         public string Name => File.Name;
@@ -13,16 +15,19 @@ namespace StarWindXExtLib {
         [Param]
         [BoolToString("yes", "no")]
         public bool SupportDeletion { get; set; } = true;
+
         [Param]
         [EnableParam("PMCacheSize")]
         [BoolToString("yes", "no")]
         public bool DeduplicationEnabled { get; set; } = false;
+
         [Param]
         [BoolToString("yes", "no")]
         public bool AutoDefrag { get; set; } = false;
 
         [Param("sectorsize")]
         public int LogicalSectorSize { get; set; } = 512;
+
         [Param("psectorSize")]
         public int PhysicalSectorSize { get; set; } = 4096;
 
@@ -45,7 +50,7 @@ namespace StarWindXExtLib {
         [Param(false, "storage")]
         public string FlashStorage { get; set; } = "";
 
-        [EnableParam("L2", "storage")]
+        [EnableParam("FlashCache", "storage")]
         public bool EnableFlashCache => FlashStorage != "";
 
         [Param(false, "PMCacheSize")]

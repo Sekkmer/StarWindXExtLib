@@ -1,7 +1,9 @@
-﻿using System;
-using StarWindXLib;
+﻿using StarWindXLib;
+
+using System;
 
 namespace StarWindXExtLib {
+
     public interface IHAPartnerExt {
         int PartnerId { get; }
         string TargetName { get; }
@@ -21,8 +23,13 @@ namespace StarWindXExtLib {
         string TrackerSnapshotStorage { get; }
         DateTime? TrackerMountTime { get; }
         string TrackerMountSnapshot { get; }
+
         string GetPropertyValue(string value);
-        IServerControl RemoveInterface(IHANetworkInterface iface);        
+
+        IServerControl RemoveInterface(IHANetworkInterface iface);
+
         IServerControl AddInterface(IHANetworkInterface iface, int priority);
+
+        IServerCommand RestoreHAFromPartner();
     }
 }

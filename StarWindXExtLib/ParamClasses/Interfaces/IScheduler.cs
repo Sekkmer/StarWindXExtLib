@@ -1,6 +1,7 @@
 ﻿using System;
 
 namespace StarWindXExtLib {
+
     public interface IScheduler : IServerCommand {
         IHADeviceExt Device { get; set; }
         int Id { get; set; }

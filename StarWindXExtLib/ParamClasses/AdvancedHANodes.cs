@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 
 namespace StarWindXExtLib {
+
     public class AdvancedHANodes : ParameterAppender, IAdvancedHANodes {
         [Param] public string Priority { get; private set; }
+
         [Param("nodeType")]
         public string NodeType { get; private set; }
+
         [Param("PartnerTargetName")]
         public string TargetName { get; private set; }
+
         [Param(false, "JournalStorages")]
         public string JournalStorage { get; private set; }
 
@@ -50,17 +54,17 @@ namespace StarWindXExtLib {
             }
             EnableJournalStorage = nodes.Exists(node => node.JournalStorage != "");
             PartnerIP = "";
-            for (int i = 1; i < Count; i++) {
+            for (var i = 1; i < Count; i++) {
                 if (i > 2 && i < Count - 1) { PartnerIP += ";"; }
-                PartnerIP += "#p" + i.ToString() + "=" + String.Join(",", First.PartnerIP[nodes[i].NodeId]);
+                PartnerIP += "#p" + i.ToString() + "=" + string.Join(",", First.PartnerIP[nodes[i].NodeId]);
             }
         }
 
         private static string ConcatValues(string name, List<IAdvancedHANode> nodes) {
-            string value = "";
-            int index = 0;
-            int from = ConcatFrom[name];
-            foreach (IAdvancedHANode node in nodes) {
+            var value = "";
+            var index = 0;
+            var from = ConcatFrom[name];
+            foreach (var node in nodes) {
                 if (index < from) { index++; continue; }
                 if (index > from + 1 && index < nodes.Count - 1) { value += ";"; }
                 value += "#p" + index.ToString() + "=" + node.GetValue(name);

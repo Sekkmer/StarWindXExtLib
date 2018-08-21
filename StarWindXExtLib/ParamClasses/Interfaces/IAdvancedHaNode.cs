@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 
 namespace StarWindXExtLib {
+
     public interface IAdvancedHANode : ICache {
         int NodeId { get; }
         bool IsAutoSynchEnabled { get; set; }
@@ -19,6 +20,7 @@ namespace StarWindXExtLib {
         string JournalStorage { get; set; }
         IHATask Task { get; }
         Dictionary<int, List<string>> PartnerIP { get; }
+
         string GetValue(string name);
     }
 }

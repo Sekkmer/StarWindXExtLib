@@ -11,10 +11,12 @@
         [BoolToString("add", "remove")]
         [EnableParam("Priority")]
         public bool ActionIsAdd { get; set; }
+
         [Param] public string PartnerTargetName => Device.GetPartnerTargetName(IFace.PartnerId);
         [Param] public NetworkInterfaceType ChannelType => IFace.InterfaceType;
         [Param] public string IP => IFace.IPAddress;
         [Param] public int Port => IFace.Port;
+
         [Param(false)]
         public int Priority { get; set; }
 

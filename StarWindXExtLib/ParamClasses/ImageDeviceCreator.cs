@@ -1,19 +1,23 @@
-﻿using System;
-using StarWindXLib;
+﻿using StarWindXLib;
+
+using System;
 
 namespace StarWindXExtLib {
+
     public class ImageDeviceCreator : ParameterAppender, IImageDeviceCreator {
         public string Path => File.Path;
         public string Name => File.Name;
 
         public STARWIND_DEVICE_TYPE DeviceType => STARWIND_DEVICE_TYPE.STARWIND_IMAGE_DEVICE;
 
-        IFileCreator File { get; }
+        private IFileCreator File { get; }
 
         [Param()]
         public int Size => File.Size;
+
         [Param("sectorsize")]
         public int LogicalSectorSize { get; set; } = 512;
+
         [Param("psectorSize")]
         public int PhysicalSectorSize { get; set; } = 4096;
 
@@ -30,7 +34,7 @@ namespace StarWindXExtLib {
         [Param(false, "storage")]
         public string FlashStorage { get; set; } = "";
 
-        [EnableParam("L2", "storage")]
+        [EnableParam("FlashCache", "storage")]
         public bool EnableFlashCache => FlashStorage != "";
 
         [Param(false, "readonly")]
@@ -43,7 +47,7 @@ namespace StarWindXExtLib {
         }
 
         public string SetFlashCache(IDevice device) {
-            if (device is null && device.DeviceType == "Image file" && device.Size != "" && device.Size != "empty") {
+            if (device is null || device.DeviceType != "Image file" || device.Size != "" || device.Size != "empty") {
                 FlashStorage = "";
                 return FlashStorage;
             }

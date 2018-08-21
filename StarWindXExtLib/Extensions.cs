@@ -1,10 +1,13 @@
-﻿using System;
+﻿using StarWindXLib;
+
+using System;
 using System.Collections.Generic;
 using System.Net;
-using StarWindXLib;
 
 namespace StarWindXExtLib {
+
     public static class Extensions {
+
         public static ICollection GetDevicesExt(this IStarWindServer server) {
             return server.Devices.Transform<IDevice, IDeviceExt>(device => device.ToExt()); ;
         }
@@ -102,7 +105,7 @@ namespace StarWindXExtLib {
         }
 
         public static ICommandResult ControlEx(this IStarWindServer server, IServerControl control) {
-            server.ExecuteCommandEx(STARWIND_COMMAND_TYPE.STARWIND_CONTROL_REQUEST, "", control.GenerateParams(), out ICommandResult result);
+            server.ExecuteCommandEx(STARWIND_COMMAND_TYPE.STARWIND_CONTROL_REQUEST, "", control.GenerateParams(), out var result);
             return result;
         }
 

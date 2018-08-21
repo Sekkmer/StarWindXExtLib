@@ -1,29 +1,52 @@
-﻿using System;
-using StarWindXLib;
+﻿using StarWindXLib;
+
+using System;
 
 namespace StarWindXExtLib {
+
     public interface IHADeviceExt : IDeviceExt, IHADevice {
-        bool WaitOnAutosynch { get; }
+#if !b12381
+        bool IsWaitingAutosync { get; }
+#endif
         int ParnerNodesCount { get; }
         bool MaintenanceMode { get; }
+
         string GetPartnerTargetName(int node);
+
         int GetPartnerPriority(int node);
+
         NodeType GetPartnerType(int node);
+
         string GetPartnerStorageDeviceType(int node);
+
         ICollection GetPartnerSynchronizationChannels(int node);
+
         ICollection GetPartnerHeartbeatChannels(int node);
+
         bool GetPartnerSynchronizationValidConnection(int node);
+
         bool GetPartnerHeartbeatValidConnection(int node);
+
         SW_HA_SYNC_STATUS GetPartnerSyncStatus(int node);
+
         int GetPartnerSyncPercent(int node);
+
         string GetPartnerSyncType(int node);
+
         string GetPartnerSyncElapsedTime(int node);
+
         string GetPartnerSyncEstimatedTime(int node);
+
         bool GetPartnerTrackerFrozen(int node);
+
         string GetPartnerTrackerSnapshotStorage(int node);
+
         DateTime? GetPartnerTrackerMountTime(int node);
+
         string GetPartnerTrackerMountSnapshot(int node);
+
         string GetPartnerParameter(string value, int node);
+
         bool Buffering { get; }
         bool Asyncmode { get; }
         bool Readonly { get; }
@@ -55,9 +78,15 @@ namespace StarWindXExtLib {
         FailoverConfType FailoverConfigType { get; }
 
         IServerControl AddPartnerInterface(IHANetworkInterface iface, int priority);
+
         IServerControl RemovePartnerInterface(IHANetworkInterface iface);
+
         ICollection GetOwnAndPartnersControlInterfaces(IStarWindServer server);
 
         ICollection PartnersExt { get; }
+
+        IServerCommand RestoreCurrentHANode();
+
+        IServerCommand RestoreFromPartnerNode(IHAPartnerExt partner);
     }
 }

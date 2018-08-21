@@ -1,6 +1,7 @@
 ﻿using StarWindXLib;
 
 namespace StarWindXExtLib {
+
     public class HANodeParam : IHANodeParam {
         [Param] public string HostName { get; set; }
         [Param] public int PortNumber { get; set; } = 3261;

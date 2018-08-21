@@ -34,7 +34,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x64\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;BUILD_NUMBER=12381</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <LangVersion>latest</LangVersion>
@@ -43,7 +43,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>bin\x64\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;b12381</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x64</PlatformTarget>
@@ -76,6 +76,8 @@
     <Compile Include="ExtClasses\ServerValueClasses\IValue.cs" />
     <Compile Include="ExtClasses\StarWindServerExt.cs" />
     <Compile Include="ExtClasses\ServerValueClasses\StringValue.cs" />
+    <Compile Include="ParamClasses\DeviceFromHeader.cs" />
+    <Compile Include="ParamClasses\Interfaces\IDeviceFromHeader.cs" />
     <Compile Include="ParamClasses\Interfaces\IServerAdd.cs" />
     <Compile Include="ParamClasses\Interfaces\IScheduler.cs" />
     <Compile Include="ParamClasses\Interfaces\IServerCommand.cs" />
@@ -96,6 +98,7 @@
     <Compile Include="ParamClasses\Interfaces\IHATask.cs" />
     <Compile Include="ParamClasses\HAInterfaceEditor.cs" />
     <Compile Include="ParamClasses\Interfaces\IHAInterfaceEditor.cs" />
+    <Compile Include="ParamClasses\ServerCommand.cs" />
     <Compile Include="ParamClasses\ServerControl.cs" />
     <Compile Include="ParamClasses\Interfaces\IServerControl.cs" />
     <Compile Include="ParamClasses\HADeviceCreator.cs" />

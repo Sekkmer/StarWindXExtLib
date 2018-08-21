@@ -1,7 +1,9 @@
 ﻿using System;
 
 namespace StarWindXExtLib {
+
     public class HATask : IHATask {
+
         public string Value =>
             NodeTypeInt.ToString() + ":" +
            ((DateTimeOffset)Time).ToUnixTimeSeconds().ToString() + ":" +
@@ -15,16 +17,19 @@ namespace StarWindXExtLib {
         public int NodeTypeInt {
             get {
                 switch (NodeType) {
-                case NodeType.Synchronous:
-                    return 5;
-                case NodeType.Asynchronous:
-                    return 4;
-                case NodeType.Witness:
-                    return 0;
+                    case NodeType.Synchronous:
+                        return 5;
+
+                    case NodeType.Asynchronous:
+                        return 4;
+
+                    case NodeType.Witness:
+                        return 0;
                 }
                 return 0;
             }
         }
+
         public DateTime Time { get; set; }
         public int Unknown1 { get; set; }
         public int RepeatInterval { get; set; }

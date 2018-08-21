@@ -1,4 +1,5 @@
 ﻿namespace StarWindXExtLib {
+
     public interface IHAImageHeaderCreator : IServerControl, ICache {
         IAdvancedHANodes Nodes { get; set; }
         string SerialId { get; set; }

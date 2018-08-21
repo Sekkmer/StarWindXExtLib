@@ -1,6 +1,7 @@
 ﻿using StarWindXLib;
 
 namespace StarWindXExtLib {
+
     public interface IStarWindServerExt : IStarWindServer {
         IValue<int> LogLevel { get; }
         IValue<string> LogMask { get; }
@@ -52,7 +53,7 @@ namespace StarWindXExtLib {
         IValue<string> DataBaseRoot { get; }
         IValue<int> DBRotationDays { get; }
         IValue<int> DBFileSizeDays { get; }
-        IValue<string> PerformanceMonitorEnabled { get; }
+        IValue<bool> PerformanceMonitorEnabled { get; }
         IValue<string> PerformanceRoot { get; }
         IValue<int> FSMThresholdPercent { get; }
         IValue<int> FSMCheckPeriodSeconds { get; }

@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 
 namespace StarWindXExtLib {
+
     [AttributeUsage(AttributeTargets.Property)]
     public class ParamAttribute : Attribute, IConditional {
         public string Name { get; }

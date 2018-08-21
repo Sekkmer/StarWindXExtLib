@@ -1,5 +1,6 @@
-﻿using System.Linq;
-using StarWindXLib;
+﻿using StarWindXLib;
+
+using System.Linq;
 
 namespace StarWindXExtLib {
 
@@ -8,7 +9,7 @@ namespace StarWindXExtLib {
 
         public static IStarWindX Component { get; } = new StarWindX();
 
-        #region   IStarWindServer
+        #region IStarWindServer
 
         public void Connect() {
             Server.Connect();
@@ -151,7 +152,7 @@ namespace StarWindXExtLib {
 
         public ICollection NumaNodes => Server.NumaNodes;
 
-        #endregion
+        #endregion IStarWindServer
 
         #region IValues
 
@@ -205,13 +206,13 @@ namespace StarWindXExtLib {
         public IValue<string> DataBaseRoot { get; } = new StringValue();
         public IValue<int> DBRotationDays { get; } = new IntValue();
         public IValue<int> DBFileSizeDays { get; } = new IntValue();
-        public IValue<string> PerformanceMonitorEnabled { get; } = new StringValue();
+        public IValue<bool> PerformanceMonitorEnabled { get; } = new BoolValue();
         public IValue<string> PerformanceRoot { get; } = new StringValue();
         public IValue<int> FSMThresholdPercent { get; } = new IntValue();
         public IValue<int> FSMCheckPeriodSeconds { get; } = new IntValue();
         public IValue<bool> FSMEnabled { get; } = new BoolValue();
 
-        #endregion
+        #endregion IValues
 
         public StarWindServerExt(IStarWindServer server) {
             Server = server;
@@ -227,8 +228,8 @@ namespace StarWindXExtLib {
         public StarWindServerExt(string ip, int port) {
             Server = Component.CreateServer(ip, port);
             foreach (var prop in GetType().GetProperties()) {
-                if(!prop.PropertyType.GetInterfaces().Contains(typeof(IAbstactValue))) { continue; }
-                if (!prop.CanRead) { continue; }                
+                if (!prop.PropertyType.GetInterfaces().Contains(typeof(IAbstactValue))) { continue; }
+                if (!prop.CanRead) { continue; }
                 if (prop.GetValue(this) is IAbstactValue value) {
                     value.Server = this;
                 }

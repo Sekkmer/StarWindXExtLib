@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 namespace StarWindXExtLib {
+
     public class CollectionExt : StarWindXLib.ICollection {
         private List<dynamic> list = new List<dynamic>();
 
@@ -10,7 +11,9 @@ namespace StarWindXExtLib {
             return list[Convert.ToInt32(index)];
         }
 
-        public IEnumerator GetEnumerator() => list.GetEnumerator();
+        public IEnumerator GetEnumerator() {
+            return list.GetEnumerator();
+        }
 
         public int Add(object value) {
             return ((IList)list).Add(value);

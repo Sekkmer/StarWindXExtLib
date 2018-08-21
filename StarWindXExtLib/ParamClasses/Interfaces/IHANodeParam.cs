@@ -1,6 +1,7 @@
 ﻿using StarWindXLib;
 
 namespace StarWindXExtLib {
+
     public interface IHANodeParam : ICache {
         string HostName { get; set; }
         int PortNumber { get; set; }
@@ -19,12 +20,13 @@ namespace StarWindXExtLib {
         string SyncInterface { get; set; }
         string HBInterface { get; set; }
         int SynchSessionsCount { get; set; }
-        string ChapType { get; set; } 
-        string ChapLogin { get; set; } 
+        string ChapType { get; set; }
+        string ChapLogin { get; set; }
         string ChapPassword { get; set; }
-        string MChapName { get; set; } 
-        string MChapSecret { get; set; } 
+        string MChapName { get; set; }
+        string MChapSecret { get; set; }
         string PoolName { get; set; }
+
         void SetServer(IStarWindServer server);
     }
 }

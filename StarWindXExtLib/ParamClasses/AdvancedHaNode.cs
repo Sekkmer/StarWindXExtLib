@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 
 namespace StarWindXExtLib {
-    public class AdvancedHANode : IAdvancedHANode {    
+
+    public class AdvancedHANode : IAdvancedHANode {
         public int NodeId { get; }
 
         public bool IsAutoSynchEnabled { get; set; } = true;
@@ -11,10 +12,12 @@ namespace StarWindXExtLib {
         public FailoverConfType FailoverConfType { get; set; } = FailoverConfType.Heartbeat;
         public int Priority { get; set; }
         private NodeType nodeType = NodeType.Synchronous;
+
         public NodeType NodeType {
             get => nodeType;
             set { nodeType = value; Task.NodeType = value; }
         }
+
         public string TargetName { get; set; }
         public string AuthChapLogin { get; set; } = "0b";
         public string AuthChapPassword { get; set; } = "0b";

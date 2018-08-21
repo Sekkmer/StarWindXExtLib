@@ -2,6 +2,7 @@
 using System.Linq;
 
 namespace StarWindXExtLib {
+
     [AttributeUsage(AttributeTargets.Property)]
     public class EnableParamAttribute : Attribute {
         public Predicate<string> CheckName { get; }

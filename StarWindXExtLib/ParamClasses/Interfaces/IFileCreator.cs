@@ -1,6 +1,7 @@
 ﻿using StarWindXLib;
 
 namespace StarWindXExtLib {
+
     public interface IFileCreator : IAppender {
         string Path { get; set; }
         string Name { get; set; }

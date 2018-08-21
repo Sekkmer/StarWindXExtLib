@@ -1,11 +1,12 @@
-﻿using System;
+﻿using StarWindXLib;
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using StarWindXLib;
 
 namespace StarWindXExtLib {
-    public class TargetCreator : ParameterAppender, ITargetCreator {
 
+    public class TargetCreator : ParameterAppender, ITargetCreator {
         public string DirectCommand => "addtarget " + Name;
 
         public static string TargetNamePrefix { get; set; } = "iqn.2008-08.com.starwindsoftware";

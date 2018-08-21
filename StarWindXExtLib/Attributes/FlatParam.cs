@@ -2,9 +2,9 @@
 using System.Runtime.CompilerServices;
 
 namespace StarWindXExtLib {
+
     [AttributeUsage(AttributeTargets.Property)]
     public class FlatParamAttribute : Attribute, IConditional {
-
         public string Name { get; }
 
         public string Prefix { get; }

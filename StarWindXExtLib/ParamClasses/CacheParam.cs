@@ -1,5 +1,7 @@
 ﻿namespace StarWindXExtLib {
+
     public class CacheParam : ICacheParam {
+
         [Param("CacheType")]
         public CacheType CacheType { get; set; }
 

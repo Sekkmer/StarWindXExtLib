@@ -1,7 +1,9 @@
-﻿using System;
-using StarWindXLib;
+﻿using StarWindXLib;
+
+using System;
 
 namespace StarWindXExtLib {
+
     public enum SW_LSFS_MODE {
         Unknown = 0,
         Normal = 1,

@@ -1,6 +1,7 @@
 ﻿using StarWindXLib;
 
 namespace StarWindXExtLib {
+
     public interface IDeviceExt : IDevice {
         int PhySectorSize { get; }
         string ParentDevice { get; }

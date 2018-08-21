@@ -1,6 +1,7 @@
 ﻿using StarWindXLib;
 
 namespace StarWindXExtLib {
+
     public interface IDeviceCreator : IAppender {
         string Path { get; }
         string Name { get; }

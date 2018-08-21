@@ -1,4 +1,5 @@
 ﻿namespace StarWindXExtLib {
+
     public enum InitializaMethod {
         [StringValue] Clear,
         [StringValue] NotSynchronize,
@@ -8,6 +9,7 @@
     }
 
     public static partial class EnumFormat {
+
         public static string ToString(this InitializaMethod format) {
             return EnumToString(format);
         }

@@ -1,5 +1,6 @@
 ﻿namespace StarWindXExtLib {
-    public interface IHADeviceCreator: IDeviceCreator {
+
+    public interface IHADeviceCreator : IDeviceCreator {
         InitializaMethod InitializaMethod { get; set; }
         IHANodeParam FirstNode { get; }
         IHANodeParam SecondNode { get; }

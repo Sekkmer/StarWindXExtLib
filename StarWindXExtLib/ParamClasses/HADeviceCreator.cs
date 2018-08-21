@@ -1,8 +1,8 @@
 ﻿using StarWindXLib;
 
 namespace StarWindXExtLib {
-    public class HADeviceCreator : ParameterAppender, IHADeviceCreator {
 
+    public class HADeviceCreator : ParameterAppender, IHADeviceCreator {
         public string Path => FirstNode.Path;
 
         public string Name => FirstNode.BaseName;
@@ -17,7 +17,7 @@ namespace StarWindXExtLib {
         [SubParam("partner1")] public IHANodeParam SecondNode { get; } = new HANodeParam();
         [SubParam(false, "partner2")] public IHANodeParam ThirdNode { get; private set; } = null;
 
-        bool enableThirdNode = false;
+        private bool enableThirdNode = false;
 
         [EnableParam("partner2")]
         public bool EnableThirdNode {
@@ -27,6 +27,6 @@ namespace StarWindXExtLib {
                     ThirdNode = new HANodeParam();
                 }
             }
-        }        
+        }
     }
 }

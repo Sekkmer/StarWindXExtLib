@@ -1,7 +1,9 @@
-﻿using System;
-using StarWindXLib;
+﻿using StarWindXLib;
+
+using System;
 
 namespace StarWindXExtLib {
+
     internal abstract class AbstactValue<T> : IValue<T> {
         public IStarWindServer Server { get; set; }
 
@@ -16,12 +18,18 @@ namespace StarWindXExtLib {
             set => Server.SetServerParameter(Name, ToString(value));
         }
 
+        public override string ToString() {
+            return Server.GetServerParameter(Name);
+        }
+
         protected AbstactValue(string name) {
             Name = name;
         }
 
         protected abstract bool IsValid(string str);
+
         protected abstract T FromString(string value);
+
         protected abstract string ToString(T value);
     }
 }
