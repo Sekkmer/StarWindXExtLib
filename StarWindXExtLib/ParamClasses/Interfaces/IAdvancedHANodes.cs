@@ -22,5 +22,7 @@ namespace StarWindXExtLib {
         int Count { get; }
 
         List<T> Transform<T>(Converter<IAdvancedHANode, T> convert);
+
+        void LoadNodes(List<IAdvancedHANode> nodes);
     }
 }

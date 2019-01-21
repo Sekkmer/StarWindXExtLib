@@ -29,7 +29,7 @@ namespace StarWindXExtLib {
         public ICacheParam Cache { get; } = new CacheParam();
 
         [FlatParam("L2", false)]
-        public ICacheParam FlashCache { get; } = new CacheParam() { CacheType = CacheType.WriteThrough };
+        public ICacheParam FlashCache { get; } = new CacheParam() { CacheMode = CacheMode.WriteThrough };
 
         [Param(false, "storage")]
         public string FlashStorage { get; set; } = "";

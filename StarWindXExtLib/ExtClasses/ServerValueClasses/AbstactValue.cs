@@ -18,6 +18,8 @@ namespace StarWindXExtLib {
             set => Server.SetServerParameter(Name, ToString(value));
         }
 
+        public dynamic DynamicValue => Value;
+
         public override string ToString() {
             return Server.GetServerParameter(Name);
         }

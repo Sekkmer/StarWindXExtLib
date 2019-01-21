@@ -54,7 +54,7 @@ namespace StarWindXExtLib {
         public string CacheMode => device.CacheMode;
 
         [Display(8, "Cache Type")]
-        public CacheType CacheType => EnumFormat.ToCacheType(device.CacheMode);
+        public CacheMode CacheModeEnum => EnumFormat.ToCacheMode(device.CacheMode);
 
         [Display(9, "Cache Size")]
         public string CacheSize => device.CacheSize;
@@ -99,6 +99,8 @@ namespace StarWindXExtLib {
         public string Path => File.Substring(0, File.LastIndexOf('/'));
 
         public override string UniqueId => DeviceId;
+
+        public bool Attached => device.TargetId != "empty";
 
         protected int GetPropertyValueAsInt(string propertyName) {
             var str = GetPropertyValue(propertyName);

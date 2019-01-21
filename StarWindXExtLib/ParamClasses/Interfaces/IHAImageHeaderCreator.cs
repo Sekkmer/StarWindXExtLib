@@ -1,4 +1,6 @@
-﻿namespace StarWindXExtLib {
+﻿using System.Collections.Generic;
+
+namespace StarWindXExtLib {
 
     public interface IHAImageHeaderCreator : IServerControl, ICache {
         IAdvancedHANodes Nodes { get; set; }
@@ -11,5 +13,7 @@
         string DeviceName { get; }
         string OwnTargetName { get; }
         string DeviceHeaderPath { get; }
+
+        void LoadNodes(List<IAdvancedHANode> list);
     }
 }

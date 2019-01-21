@@ -5,25 +5,35 @@ using System.Collections.Generic;
 using System.Net;
 
 namespace StarWindXExtLib {
-
     public static class Extensions {
-
+        [Obsolete("Use IStarwindServerExt", false)]
         public static ICollection GetDevicesExt(this IStarWindServer server) {
             return server.Devices.Transform<IDevice, IDeviceExt>(device => device.ToExt()); ;
         }
 
+        [Obsolete("Use IStarwindServerExt", false)]
         public static ICollection GetDevicesExt(this ITarget target) {
             return target.Devices.Transform<IDevice, IDeviceExt>(device => device.ToExt());
         }
 
-        public static dynamic ToExt(this IDevice device) {
-            if (device is IHADevice ha) {
+
+        public static IDeviceExt ToExt(this IDevice device) {
+            if (device is IDeviceExt ext) {
+                return ext;
+            } else if (device is IHADevice ha) {
                 return new HADeviceExt(ha);
             } else if (device is ILSFSDevice lsfs) {
                 return new LSFSDeviceExt(lsfs);
             } else {
                 return new DeviceExt(device);
             }
+        }
+
+        public static ITarget ToExt(this ITarget target) {
+            if (target is TargetExt ext) {
+                return ext;
+            }
+            return new TargetExt(target);
         }
 
         public static bool Contains(this ICollection collection, IDevice other) {
@@ -44,6 +54,15 @@ namespace StarWindXExtLib {
             return false;
         }
 
+        public static bool Contains<T>(this ICollection collection, Predicate<T> pred) {
+            foreach (T item in collection) {
+                if (pred(item)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public static T Find<T>(this ICollection collection, Predicate<T> pred) {
             foreach (T item in collection) {
                 if (pred(item)) {
@@ -51,6 +70,20 @@ namespace StarWindXExtLib {
                 }
             }
             return default;
+        }
+
+        public static ICollection Filter<T>(this ICollection collection, Predicate<T> pred) {
+            var ret = new CollectionExt();
+            foreach (T item in collection) {
+                if (pred(item)) {
+                    ret.Add(item);
+                }
+            }
+            return ret;
+        }
+
+        public static ICollection EmptyCollection() {
+            return new CollectionExt();
         }
 
         public static IDevice MountSnapshot(this IStarWindServer server, ILSFSDevice device, ISnapshot snapshot) {
@@ -117,6 +150,7 @@ namespace StarWindXExtLib {
             return lhs.Id == rhs.Id;
         }
 
+        [Obsolete("Use Contains<T>", false)]
         public static bool IsElement<T>(this ICollection collection, Predicate<T> pred) {
             foreach (T element in collection) {
                 if (pred(element)) { return true; }

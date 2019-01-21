@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace StarWindXExtLib {
 
@@ -40,7 +41,12 @@ namespace StarWindXExtLib {
             } else if (obj is NodeType type) {
                 return EnumFormat.EnumToString(type);
             } else {
-                return obj.ToString();
+                try {
+                return obj.ToString();    
+                } catch (System.Exception e) {
+                    MessageBox.Show(name + "\n\n" + e.Message);
+                    throw;
+                }
             }
         }
 

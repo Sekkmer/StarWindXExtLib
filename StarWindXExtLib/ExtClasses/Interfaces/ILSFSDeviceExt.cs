@@ -29,10 +29,10 @@ namespace StarWindXExtLib {
         int SnapshotOffset { get; }
         string SnapshotName { get; }
         DateTime? SnapshotTime { get; }
-        string PMCacheMode { get; }
-        CacheType PMCacheType { get; }
+        string PMCacheModeString { get; }
+        CacheMode PMCacheMode { get; }
         int PMCacheSizeMB { get; }
-        string L2CacheMode { get; }
-        CacheType L2CacheType { get; }
+        string L2CacheModeString { get; }
+        CacheMode L2CacheMode { get; }
     }
 }

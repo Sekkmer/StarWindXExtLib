@@ -45,12 +45,26 @@ namespace StarWindXExtLib {
         public bool EnableJournalStorage => First.JournalStorage != "";
 
         public IAdvancedHANode First => Nodes[0];
-        private List<IAdvancedHANode> Nodes { get; }
+        private List<IAdvancedHANode> Nodes { get; set; }
 
         public int Count => Nodes.Count;
 
         public HAPartnerAdder(IHADeviceExt device, List<IAdvancedHANode> nodes) {
             Device = device;
+            Nodes = nodes;
+            ConcatAllValues();
+            PartnerIP = "";
+            for (var i = 1; i < Count; i++) {
+                if (i > 2 && i < Count - 1) { PartnerIP += ";"; }
+                PartnerIP += "#p" + i.ToString() + "=" + string.Join(",", First.PartnerIP[nodes[i].NodeId]);
+            }
+        }
+
+        public HAPartnerAdder(IHADeviceExt device) {
+            Device = device;
+        }
+
+        public void LoadNodes(List<IAdvancedHANode> nodes) {
             Nodes = nodes;
             ConcatAllValues();
             PartnerIP = "";

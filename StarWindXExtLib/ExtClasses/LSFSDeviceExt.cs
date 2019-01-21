@@ -74,17 +74,17 @@ namespace StarWindXExtLib {
         [Display(1014, "Snapshot Time")]
         public DateTime? SnapshotTime => GetPropertyValueAsDateTime("SnapshotTime");
 
-        public string PMCacheMode => GetPropertyValue("PMCacheMode");
+        public string PMCacheModeString => GetPropertyValue("PMCacheMode");
 
         [Display(1015, "PM Cache Type")]
-        public CacheType PMCacheType => EnumFormat.ToCacheType(PMCacheMode);
+        public CacheMode PMCacheMode => EnumFormat.ToCacheMode(PMCacheModeString);
 
         [Display(1016, "PM Cache Size MB")]
         public int PMCacheSizeMB => GetPropertyValueAsInt("PMCacheSizeMB");
 
-        public string L2CacheMode => GetPropertyValue("L2CacheMode");
+        public string L2CacheModeString => GetPropertyValue("L2CacheMode");
 
         [Display(1017, "L2 Cache Type")]
-        public CacheType L2CacheType => EnumFormat.ToCacheType(L2CacheMode);
+        public CacheMode L2CacheMode => EnumFormat.ToCacheMode(L2CacheModeString);
     }
 }

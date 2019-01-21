@@ -1,6 +1,6 @@
 ﻿namespace StarWindXExtLib {
 
-    public enum CacheType {
+    public enum CacheMode {
 
         [StringValue("none")]
         None,
@@ -14,16 +14,16 @@
 
     public static partial class EnumFormat {
 
-        public static string ToString(this CacheType type) {
+        public static string ToString(this CacheMode type) {
             return EnumToString(type);
         }
 
-        public static void FromString(this CacheType type, string str) {
+        public static void FromString(this CacheMode type, string str) {
             EnumFromString(type, str);
         }
 
-        public static CacheType ToCacheType(string str) {
-            var type = CacheType.None;
+        public static CacheMode ToCacheMode(string str) {
+            var type = CacheMode.None;
             type.FromString(str);
             return type;
         }

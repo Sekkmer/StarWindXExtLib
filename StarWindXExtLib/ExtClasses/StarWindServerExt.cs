@@ -130,9 +130,9 @@ namespace StarWindXExtLib {
 
         public bool Connected => Server.Connected;
 
-        public ICollection Targets => Server.Targets;
+        public ICollection Targets => Server.Targets.Transform((ITarget target) => target.ToExt());
 
-        public ICollection Devices => Server.Devices;
+        public ICollection Devices => Server.Devices.Transform((IDevice device) => device.ToExt());
 
         public string ServerInformation => Server.ServerInformation;
 

@@ -36,7 +36,7 @@ namespace StarWindXExtLib {
             var pars = new T();
             AppendParams(pars);
             return pars;
-        }
+        }       
 
         private static string ToString(MemberInfo info, object obj) {
             if (obj is string str) {
@@ -45,6 +45,8 @@ namespace StarWindXExtLib {
                 if (info.GetCustomAttribute<BoolToStringAttribute>(true) is BoolToStringAttribute attr) {
                     return b ? attr.TrueString : attr.FalseString;
                 }
+                System.Windows.Forms.MessageBox.Show(info.Name);
+                System.Windows.Forms.MessageBox.Show(obj.ToString());
                 return null;
             } else if (obj.GetType().BaseType == typeof(Enum)) {
                 return EnumFormat.EnumToString(obj);
@@ -66,24 +68,24 @@ namespace StarWindXExtLib {
             var properties = obj.GetType().GetProperties();
             bool IsEnabled(IConditional attr) {
                 if (attr.Enabled) { return true; }
-                return (bool)properties.Single(info => info.GetCustomAttribute<EnableParamAttribute>(true)?.CheckName(attr.Name) ?? false)
-                    .GetValue(obj);
+                return (bool)properties.Single(
+                    info => info.GetCustomAttribute<EnableParamAttribute>(true)?.CheckName(attr.Name) ?? false
+                    ).GetValue(obj);
             }
             foreach (var info in properties) {
                 if (!info.CanRead) { continue; }
-                var value = info.GetValue(obj);
                 if (info.GetCustomAttribute<ParamAttribute>(true) is ParamAttribute attr) {
-                    if (IsEnabled(attr) && ToString(info, value) is var str) {
+                    if (IsEnabled(attr) && ToString(info, info.GetValue(obj)) is string str) {
                         pars.AppendParam(prefix + attr.Name, str);
                     }
                 } else if (info.GetCustomAttribute<FlatParamAttribute>(true) is FlatParamAttribute flat) {
                     if (IsEnabled(flat)) {
-                        Append(pars, value, flat.Prefix);
+                        Append(pars, info.GetValue(obj), flat.Prefix);
                     }
                 } else if (info.GetCustomAttribute<SubParamAttribute>(true) is SubParamAttribute sub) {
                     if (IsEnabled(sub)) {
                         var newPars = pars.AppendParams(sub.Name);
-                        Append(newPars, value, sub.Prefix);
+                        Append(newPars, info.GetValue(obj), sub.Prefix);
                     }
                 }
             }

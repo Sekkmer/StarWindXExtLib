@@ -2,24 +2,25 @@
 
     public class CacheParam : ICacheParam {
 
-        [Param("CacheType")]
-        public CacheType CacheType { get; set; }
+        [Param("CacheMode")]
+        public CacheMode CacheMode { get; set; }
 
-        [Param(false, "CacheSize")]
+        [Param(false, "CacheSize"), IntZero("")]
         public int SizeInMB { get; set; }
 
-        [Param(false)]
-        [IntZero("")]
+        [Param(false), IntZero("")]
         public int CacheBlockExpiryPeriodMS { get; set; }
 
         [EnableParam("CacheSize")]
-        public bool CacheEnabled => CacheType != CacheType.None;
+        public bool CacheEnabled => CacheMode != CacheMode.None || EnableNoneSize;
+
+        public bool EnableNoneSize { get; set; } = false;
 
         [EnableParam("CacheBlockExpiryPeriodMS")]
         public bool EnableBlockExpiry { get; set; } = false;
 
         public void CopyFrom(ICacheParam other) {
-            CacheType = other.CacheType;
+            CacheMode = other.CacheMode;
             SizeInMB = other.SizeInMB;
             CacheBlockExpiryPeriodMS = other.CacheBlockExpiryPeriodMS;
             EnableBlockExpiry = other.EnableBlockExpiry;

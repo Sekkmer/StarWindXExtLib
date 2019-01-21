@@ -10,6 +10,7 @@ namespace StarWindXExtLib {
 
         public override string RequestValue { get; protected set; } = "";
 
+        [Param]
         public string DeviceHeaderPath => Device.DeviceHeaderPath.Substring(0, Device.DeviceHeaderPath.LastIndexOf('.')) + "_HA.swdsk";
 
         [Param("Type")]
@@ -19,7 +20,7 @@ namespace StarWindXExtLib {
         public string DeviceName => Device.Name;
 
         [Param("size")]
-        public int DeviceSize => Convert.ToInt32(Device.Size);
+        public int DeviceSize => Convert.ToInt32(Device.Size) / 1024 / 1024;
 
         [FlatParam]
         public IAdvancedHANodes Nodes { get; set; }
@@ -47,7 +48,7 @@ namespace StarWindXExtLib {
         public string Revision => "0001";
 
         [Param("product")]
-        public string Product { get; set; } = "STARWIND";
+        public string Product { get; set; } = "STARWIND        ";
 
         [Param("vendor")]
         public string Vendor { get; set; } = "STARWIND";
@@ -64,12 +65,7 @@ namespace StarWindXExtLib {
         [Param("Replicator")]
         public string ReplicatorString {
             get {
-                var str = "";
-                for (var i = 1; i <= Nodes.Count; i++) {
-                    if (i > 1) { str += ";"; }
-                    str += "#p" + i.ToString() + "=" + Replicator.ToString();
-                }
-                return str;
+                return "#p" + 0.ToString() + "=" + Replicator.ToString(); 
             }
         }
 
@@ -86,6 +82,15 @@ namespace StarWindXExtLib {
 
         public HAImageHeaderCreator(List<IAdvancedHANode> list) {
             Nodes = new AdvancedHANodes(list);
+        }
+
+        public HAImageHeaderCreator() {
+            Nodes = new AdvancedHANodes();
+                
+        }
+
+        public void LoadNodes(List<IAdvancedHANode> list) {
+            Nodes.LoadNodes(list);
         }
     }
 }

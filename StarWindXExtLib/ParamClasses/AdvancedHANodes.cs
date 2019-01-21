@@ -4,6 +4,7 @@ using System.Collections.Generic;
 namespace StarWindXExtLib {
 
     public class AdvancedHANodes : ParameterAppender, IAdvancedHANodes {
+
         [Param] public string Priority { get; private set; }
 
         [Param("nodeType")]
@@ -26,7 +27,7 @@ namespace StarWindXExtLib {
         public bool EnableJournalStorage { get; private set; }
 
         public IAdvancedHANode First => Nodes[0];
-        private List<IAdvancedHANode> Nodes { get; }
+        private List<IAdvancedHANode> Nodes { get; set; }
 
         public int Count => Nodes.Count;
 
@@ -42,15 +43,20 @@ namespace StarWindXExtLib {
                 { "AuthChapType", 1 }
             };
 
+        public AdvancedHANodes() {}
+
         public AdvancedHANodes(List<IAdvancedHANode> nodes) {
+            LoadNodes(nodes);
+        }
+
+        public void LoadNodes(List<IAdvancedHANode> nodes) {
             Nodes = nodes;
             foreach (var prop in GetType().GetProperties()) {
-                if (prop.CanWrite) {
-                    if (prop.Name == "PartnerIP") {
-                        continue;
-                    }
-                    prop.SetValue(this, ConcatValues(prop.Name, nodes));
+                if (!prop.CanWrite) { continue; }
+                if (prop.Name == "PartnerIP" || prop.Name == "EnableJournalStorage") {
+                    continue;
                 }
+                prop.SetValue(this, ConcatValues(prop.Name, nodes));
             }
             EnableJournalStorage = nodes.Exists(node => node.JournalStorage != "");
             PartnerIP = "";
@@ -66,7 +72,7 @@ namespace StarWindXExtLib {
             var from = ConcatFrom[name];
             foreach (var node in nodes) {
                 if (index < from) { index++; continue; }
-                if (index > from + 1 && index < nodes.Count - 1) { value += ";"; }
+                if (index > from) { value += ";"; }
                 value += "#p" + index.ToString() + "=" + node.GetValue(name);
                 index++;
             }

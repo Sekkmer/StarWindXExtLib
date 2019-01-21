@@ -9,5 +9,6 @@ namespace StarWindXExtLib {
         string Name { get; }
         bool Valid { get; }
         Type ValueType { get; }
+        dynamic DynamicValue { get; }
     }
 }

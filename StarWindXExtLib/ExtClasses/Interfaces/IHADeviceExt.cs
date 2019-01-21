@@ -5,7 +5,7 @@ using System;
 namespace StarWindXExtLib {
 
     public interface IHADeviceExt : IDeviceExt, IHADevice {
-#if !b12381
+#if !b12393
         bool IsWaitingAutosync { get; }
 #endif
         int ParnerNodesCount { get; }
@@ -22,6 +22,8 @@ namespace StarWindXExtLib {
         ICollection GetPartnerSynchronizationChannels(int node);
 
         ICollection GetPartnerHeartbeatChannels(int node);
+
+        ICollection AllChannels { get; }
 
         bool GetPartnerSynchronizationValidConnection(int node);
 

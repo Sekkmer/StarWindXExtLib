@@ -11,7 +11,7 @@ namespace StarWindXExtLib {
             haDevice = ha;
         }
 
-#if b12381
+#if b12393
 
         public void Synchronize(SW_HA_SYNC_TYPE syncType, string srcTargetName) {
             haDevice.Synchronize(syncType, srcTargetName);
@@ -30,8 +30,7 @@ namespace StarWindXExtLib {
         [Obsolete("Use \"PartnerExt\"")]
         public ICollection Partners => haDevice.Partners;
 
-        private ICollection GetChannels(NetworkInterfaceType type) {
-            var infs = new CollectionExt();
+        private ICollection GetChannels(CollectionExt infs, NetworkInterfaceType type) {
             var name = type == NetworkInterfaceType.Synchronization ? "sync" : "heartbeat";
             for (var i = 1; i <= ParnerNodesCount; i++) {
                 AddChannels(i, type, infs, GetPropertyValue("ha_partner_node" + i.ToString() + "_" + name + "_channels"));
@@ -57,10 +56,18 @@ namespace StarWindXExtLib {
         }
 
         [Display(2000, "Synchronization Channels", CollecionType = typeof(IHANetworkInterface))]
-        public ICollection SynchronizationChannels => GetChannels(NetworkInterfaceType.Synchronization);
+        public ICollection SynchronizationChannels => GetChannels(new CollectionExt(), NetworkInterfaceType.Synchronization);
 
         [Display(2001, "Heartbeat Channels", CollecionType = typeof(IHANetworkInterface))]
-        public ICollection HeartbeatChannels => GetChannels(NetworkInterfaceType.Heartbeat);
+        public ICollection HeartbeatChannels => GetChannels(new CollectionExt(), NetworkInterfaceType.Heartbeat);
+
+        public ICollection AllChannels {
+            get {
+                var all = SynchronizationChannels as CollectionExt;
+                GetChannels(all, NetworkInterfaceType.Heartbeat);
+                return all;
+            }
+        }
 
         [Display(2002, "Sync Status")]
         public SW_HA_SYNC_STATUS SyncStatus => haDevice.SyncStatus;
