@@ -1,6 +1,8 @@
-﻿namespace StarWindXExtLib {
+﻿namespace StarWindXExtLib
+{
 
-    public interface IServerAdd : IAppender {
+    public interface IServerAdd : IAppender
+    {
         string Name { get; }
     }
 }

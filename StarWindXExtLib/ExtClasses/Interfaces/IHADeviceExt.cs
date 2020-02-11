@@ -1,15 +1,14 @@
 ﻿using StarWindXLib;
 
 using System;
+using System.Collections.Generic;
 
-namespace StarWindXExtLib {
+namespace StarWindXExtLib
+{
+    public interface IHADeviceExt : IDeviceExt, IHADevice
+    {
 
-    public interface IHADeviceExt : IDeviceExt, IHADevice {
-#if !b12393
-        bool IsWaitingAutosync { get; }
-#endif
-        int ParnerNodesCount { get; }
-        bool MaintenanceMode { get; }
+        #region Partner Info
 
         string GetPartnerTargetName(int node);
 
@@ -19,11 +18,11 @@ namespace StarWindXExtLib {
 
         string GetPartnerStorageDeviceType(int node);
 
-        ICollection GetPartnerSynchronizationChannels(int node);
+        IEnumerable<IHANetworkInterface> GetPartnerSynchronizationChannels(int node);
 
-        ICollection GetPartnerHeartbeatChannels(int node);
+        IEnumerable<IHANetworkInterface> GetPartnerHeartbeatChannels(int node);
 
-        ICollection AllChannels { get; }
+        IEnumerable<IHANetworkInterface> AllChannels { get; }
 
         bool GetPartnerSynchronizationValidConnection(int node);
 
@@ -49,6 +48,10 @@ namespace StarWindXExtLib {
 
         string GetPartnerParameter(string value, int node);
 
+        #endregion Partner Info
+
+        int ParnerNodesCount { get; }
+        bool MaintenanceMode { get; }
         bool Buffering { get; }
         bool Asyncmode { get; }
         bool Readonly { get; }
@@ -83,9 +86,9 @@ namespace StarWindXExtLib {
 
         IServerControl RemovePartnerInterface(IHANetworkInterface iface);
 
-        ICollection GetOwnAndPartnersControlInterfaces(IStarWindServer server);
+        IEnumerable<IControlInterface> GetOwnAndPartnersControlInterfaces(IStarWindServer server);
 
-        ICollection PartnersExt { get; }
+        IEnumerable<IHAPartnerExt> PartnersExt { get; }
 
         IServerCommand RestoreCurrentHANode();
 

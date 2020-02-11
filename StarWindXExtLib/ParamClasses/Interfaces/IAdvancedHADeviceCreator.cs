@@ -1,6 +1,8 @@
-﻿namespace StarWindXExtLib {
+﻿namespace StarWindXExtLib
+{
 
-    public interface IAdvancedHADeviceCreator : IServerAdd, ICache {
+    public interface IAdvancedHADeviceCreator : IServerAdd, ICache
+    {
         string DeviceName { get; set; }
         string OwnTargetName { get; }
         string HeaderFile { get; }

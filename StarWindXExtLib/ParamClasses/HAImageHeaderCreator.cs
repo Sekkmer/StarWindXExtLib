@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace StarWindXExtLib {
+namespace StarWindXExtLib
+{
 
-    public class HAImageHeaderCreator : ServerControl, IHAImageHeaderCreator {
+    public class HAImageHeaderCreator : ServerControl, IHAImageHeaderCreator
+    {
         public override string SendTo => "HAImage";
 
         public override string Request => "CreateHeader";
@@ -65,7 +67,7 @@ namespace StarWindXExtLib {
         [Param("Replicator")]
         public string ReplicatorString {
             get {
-                return "#p" + 0.ToString() + "=" + Replicator.ToString(); 
+                return "#p" + 0.ToString() + "=" + Replicator.ToString();
             }
         }
 
@@ -76,20 +78,24 @@ namespace StarWindXExtLib {
 
         public string OwnTargetName => ThisNode.TargetName;
 
-        public HAImageHeaderCreator(IAdvancedHANodes nodes) {
+        public HAImageHeaderCreator(IAdvancedHANodes nodes)
+        {
             Nodes = nodes;
         }
 
-        public HAImageHeaderCreator(List<IAdvancedHANode> list) {
+        public HAImageHeaderCreator(List<IAdvancedHANode> list)
+        {
             Nodes = new AdvancedHANodes(list);
         }
 
-        public HAImageHeaderCreator() {
+        public HAImageHeaderCreator()
+        {
             Nodes = new AdvancedHANodes();
-                
+
         }
 
-        public void LoadNodes(List<IAdvancedHANode> list) {
+        public void LoadNodes(List<IAdvancedHANode> list)
+        {
             Nodes.LoadNodes(list);
         }
     }

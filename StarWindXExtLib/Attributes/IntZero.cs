@@ -1,12 +1,15 @@
 ﻿using System;
 
-namespace StarWindXExtLib {
+namespace StarWindXExtLib
+{
 
     [AttributeUsage(AttributeTargets.Property)]
-    public class IntZeroAttribute : Attribute {
+    public sealed class IntZeroAttribute : Attribute
+    {
         public string Value { get; }
 
-        public IntZeroAttribute(string value) {
+        public IntZeroAttribute(string value)
+        {
             Value = value;
         }
     }

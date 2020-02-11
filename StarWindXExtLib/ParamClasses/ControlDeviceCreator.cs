@@ -1,6 +1,8 @@
-﻿namespace StarWindXExtLib {
+﻿namespace StarWindXExtLib
+{
 
-    public class ControlDeviceCreator : ParameterAppender, IServerAdd {
+    public class ControlDeviceCreator : ParameterAppender, IServerAdd
+    {
         public string Name => "contoldevice";
     }
 }

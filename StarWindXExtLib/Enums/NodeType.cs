@@ -1,6 +1,8 @@
-﻿namespace StarWindXExtLib {
+﻿namespace StarWindXExtLib
+{
 
-    public enum NodeType {
+    public enum NodeType
+    {
 
         [StringValue("1")]
         Synchronous = 1,
@@ -12,13 +14,16 @@
         Witness = 8,
     }
 
-    public static partial class EnumFormat {
+    public static partial class EnumFormat
+    {
 
-        public static string ToString(this NodeType type) {
+        public static string ToString(this NodeType type)
+        {
             return EnumToString(type);
         }
 
-        public static void FromString(this NodeType type, string str) {
+        public static void FromString(this NodeType type, string str)
+        {
             EnumFromString(type, str);
         }
     }

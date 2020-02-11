@@ -1,8 +1,10 @@
 ﻿using System;
 
-namespace StarWindXExtLib {
+namespace StarWindXExtLib
+{
 
-    public class Scheduler : ParameterAppender, IScheduler {
+    public class Scheduler : ParameterAppender, IScheduler
+    {
         public string Command => "schedule";
 
         [Param("device")]

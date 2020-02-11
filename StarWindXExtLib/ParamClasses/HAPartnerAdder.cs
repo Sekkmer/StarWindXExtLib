@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace StarWindXExtLib {
+namespace StarWindXExtLib
+{
 
-    public class HAPartnerAdder : ParameterAppender, IAdvancedHANodes, IServerControl {
+    public class HAPartnerAdder : ParameterAppender, IAdvancedHANodes, IServerControl
+    {
         public string SendTo => Device.DeviceId;
 
         public string Request => "AddPartner";
@@ -42,14 +44,15 @@ namespace StarWindXExtLib {
 
         private IHADeviceExt Device { get; }
 
-        public bool EnableJournalStorage => First.JournalStorage != "";
+        public bool EnableJournalStorage => !string.IsNullOrEmpty(First.JournalStorage);
 
         public IAdvancedHANode First => Nodes[0];
         private List<IAdvancedHANode> Nodes { get; set; }
 
         public int Count => Nodes.Count;
 
-        public HAPartnerAdder(IHADeviceExt device, List<IAdvancedHANode> nodes) {
+        public HAPartnerAdder(IHADeviceExt device, List<IAdvancedHANode> nodes)
+        {
             Device = device;
             Nodes = nodes;
             ConcatAllValues();
@@ -60,11 +63,13 @@ namespace StarWindXExtLib {
             }
         }
 
-        public HAPartnerAdder(IHADeviceExt device) {
+        public HAPartnerAdder(IHADeviceExt device)
+        {
             Device = device;
         }
 
-        public void LoadNodes(List<IAdvancedHANode> nodes) {
+        public void LoadNodes(List<IAdvancedHANode> nodes)
+        {
             Nodes = nodes;
             ConcatAllValues();
             PartnerIP = "";
@@ -86,7 +91,8 @@ namespace StarWindXExtLib {
             "AuthChapType"
         };
 
-        private void ConcatAllValues() {
+        private void ConcatAllValues()
+        {
             foreach (var name in ConcatAll) {
                 var value = "";
                 for (var index = 1; index < Count; index++) {
@@ -101,7 +107,8 @@ namespace StarWindXExtLib {
             }
         }
 
-        public List<T> Transform<T>(Converter<IAdvancedHANode, T> convert) {
+        public List<T> Transform<T>(Converter<IAdvancedHANode, T> convert)
+        {
             return Nodes.ConvertAll(convert);
         }
     }

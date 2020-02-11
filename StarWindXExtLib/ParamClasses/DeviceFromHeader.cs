@@ -1,6 +1,8 @@
-﻿namespace StarWindXExtLib {
+﻿namespace StarWindXExtLib
+{
 
-    public class DeviceFromHeader : ParameterAppender, IDeviceFromHeader {
+    public class DeviceFromHeader : ParameterAppender, IDeviceFromHeader
+    {
         public string Name { get => ""; set { } }
 
         [Param("file")]

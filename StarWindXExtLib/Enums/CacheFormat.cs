@@ -1,6 +1,8 @@
-﻿namespace StarWindXExtLib {
+﻿namespace StarWindXExtLib
+{
 
-    public enum CacheFormat {
+    public enum FileSystemFormat
+    {
 
         [StringValue("none")]
         NONE,
@@ -15,13 +17,16 @@
         RAW
     }
 
-    public static partial class EnumFormat {
+    public static partial class EnumFormat
+    {
 
-        public static string ToString(this CacheFormat format) {
+        public static string ToString(this FileSystemFormat format)
+        {
             return EnumToString(format);
         }
 
-        public static void FromString(this CacheFormat format, string str) {
+        public static void FromString(this FileSystemFormat format, string str)
+        {
             EnumFromString(format, str);
         }
     }

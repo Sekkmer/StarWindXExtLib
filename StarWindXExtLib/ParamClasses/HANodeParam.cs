@@ -1,8 +1,10 @@
 ﻿using StarWindXLib;
 
-namespace StarWindXExtLib {
+namespace StarWindXExtLib
+{
 
-    public class HANodeParam : IHANodeParam {
+    public class HANodeParam : IHANodeParam
+    {
         [Param] public string HostName { get; set; }
         [Param] public int PortNumber { get; set; } = 3261;
         [Param] public string UserName { get; set; } = "root";
@@ -31,7 +33,8 @@ namespace StarWindXExtLib {
         [Param] public string PoolName { get; set; } = "Default";
         [FlatParam] public ICacheParam Cache { get; } = new CacheParam();
 
-        public void SetServer(IStarWindServer server) {
+        public void SetServer(IStarWindServer server)
+        {
             HostName = server.IP;
             PortNumber = server.Port;
             UserName = server.AuthentificationInfo.Login;

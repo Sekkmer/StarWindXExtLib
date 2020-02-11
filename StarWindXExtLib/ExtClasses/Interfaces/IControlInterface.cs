@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 
-namespace StarWindXExtLib {
+namespace StarWindXExtLib
+{
 
-    public interface IControlInterface {
+    public interface IControlInterface
+    {
         string HostName { get; }
         List<string> NetInterfaces { get; }
         int Port { get; }

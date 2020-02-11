@@ -1,5 +1,7 @@
-﻿namespace StarWindXExtLib {
-    public class DiskBridgeCreator : ParameterAppender, IDiskBridgeCreator {
+﻿namespace StarWindXExtLib
+{
+    public class DiskBridgeCreator : ParameterAppender, IDiskBridgeCreator
+    {
 
         public string Name { get; set; }
 

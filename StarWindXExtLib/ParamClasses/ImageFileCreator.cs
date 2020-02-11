@@ -1,8 +1,10 @@
 ﻿using StarWindXLib;
 
-namespace StarWindXExtLib {
+namespace StarWindXExtLib
+{
 
-    public class ImageFileCreator : ParameterAppender, IImageFileCreator {
+    public class ImageFileCreator : ParameterAppender, IImageFileCreator
+    {
         public STARWIND_FILE_TYPE FileType => STARWIND_FILE_TYPE.STARWIND_IMAGE_FILE;
 
         public string Path { get; set; }

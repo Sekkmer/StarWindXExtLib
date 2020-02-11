@@ -1,8 +1,10 @@
 ﻿using StarWindXLib;
 
-namespace StarWindXExtLib {
+namespace StarWindXExtLib
+{
 
-    public class RamDeviceCreator : ParameterAppender, IRamDeviceCreator {
+    public class RamDeviceCreator : ParameterAppender, IRamDeviceCreator
+    {
         public string Path => "";
         public string Name => "";
         public STARWIND_DEVICE_TYPE DeviceType => STARWIND_DEVICE_TYPE.STARWIND_RAM_DEVICE;
@@ -20,9 +22,10 @@ namespace StarWindXExtLib {
         public int PhysicalSectorSize { get; set; } = 4096;
 
         [Param("format")]
-        public CacheFormat Format { get; set; } = CacheFormat.NONE;
+        public FileSystemFormat Format { get; set; } = FileSystemFormat.NONE;
 
-        public void SetSize(int size) {
+        public void SetSize(int size)
+        {
             Size = size;
         }
     }

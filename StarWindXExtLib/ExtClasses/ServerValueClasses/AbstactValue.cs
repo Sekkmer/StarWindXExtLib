@@ -2,16 +2,18 @@
 
 using System;
 
-namespace StarWindXExtLib {
+namespace StarWindXExtLib
+{
 
-    internal abstract class AbstactValue<T> : IValue<T> {
+    internal abstract class AbstactValue<T> : IValue<T>
+    {
         public IStarWindServer Server { get; set; }
 
         public string Name { get; }
 
         public Type ValueType => typeof(T);
 
-        public bool Valid => IsValid(Server.GetServerParameter(Name));
+        public bool Valid => IsValid(Server.GetServerParameter(Name) ?? "");
 
         public T Value {
             get => FromString(Server.GetServerParameter(Name));
@@ -20,11 +22,13 @@ namespace StarWindXExtLib {
 
         public dynamic DynamicValue => Value;
 
-        public override string ToString() {
+        public override string ToString()
+        {
             return Server.GetServerParameter(Name);
         }
 
-        protected AbstactValue(string name) {
+        protected AbstactValue(string name)
+        {
             Name = name;
         }
 

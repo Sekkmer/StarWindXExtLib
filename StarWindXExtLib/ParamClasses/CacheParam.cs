@@ -1,6 +1,8 @@
-﻿namespace StarWindXExtLib {
+﻿namespace StarWindXExtLib
+{
 
-    public class CacheParam : ICacheParam {
+    public class CacheParam : ICacheParam
+    {
 
         [Param("CacheMode")]
         public CacheMode CacheMode { get; set; }
@@ -19,7 +21,8 @@
         [EnableParam("CacheBlockExpiryPeriodMS")]
         public bool EnableBlockExpiry { get; set; } = false;
 
-        public void CopyFrom(ICacheParam other) {
+        public void CopyFrom(ICacheParam other)
+        {
             CacheMode = other.CacheMode;
             SizeInMB = other.SizeInMB;
             CacheBlockExpiryPeriodMS = other.CacheBlockExpiryPeriodMS;

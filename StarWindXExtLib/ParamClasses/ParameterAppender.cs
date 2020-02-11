@@ -5,11 +5,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace StarWindXExtLib {
+namespace StarWindXExtLib
+{
 
-    public class ParameterAppender : IAppender {
+    public class ParameterAppender : IAppender
+    {
 
-        private struct Param {
+        private struct Param
+        {
             public string Name { get; set; }
             public string Value { get; set; }
         }
@@ -17,28 +20,33 @@ namespace StarWindXExtLib {
         private List<Param> additionalParams;
         private List<Param> AdditionalParams => additionalParams ?? (additionalParams = new List<Param>());
 
-        public void AppendParam(string paramName, string paramValue) {
+        public void AppendParam(string paramName, string paramValue)
+        {
             AdditionalParams.Add(new Param { Name = paramName, Value = paramValue });
         }
 
-        public void AppendParams(IParameters pars) {
+        public void AppendParams(IParameters pars)
+        {
             Append(pars, this);
             additionalParams?.ForEach(par => pars.AppendParam(par.Name, par.Value));
         }
 
-        public Parameters GenerateParams() {
+        public Parameters GenerateParams()
+        {
             var pars = new Parameters();
             AppendParams(pars);
             return pars;
         }
 
-        public T GenerateParams<T>() where T : IParameters, new() {
+        public T GenerateParams<T>() where T : IParameters, new()
+        {
             var pars = new T();
             AppendParams(pars);
             return pars;
-        }       
+        }
 
-        private static string ToString(MemberInfo info, object obj) {
+        private static string ToString(MemberInfo info, object obj)
+        {
             if (obj is string str) {
                 return str;
             } else if (obj is bool b) {
@@ -64,9 +72,11 @@ namespace StarWindXExtLib {
             }
         }
 
-        private static void Append(IParameters pars, object obj, string prefix = "") {
+        private static void Append(IParameters pars, object obj, string prefix = "")
+        {
             var properties = obj.GetType().GetProperties();
-            bool IsEnabled(IConditional attr) {
+            bool IsEnabled(IConditional attr)
+            {
                 if (attr.Enabled) { return true; }
                 return (bool)properties.Single(
                     info => info.GetCustomAttribute<EnableParamAttribute>(true)?.CheckName(attr.Name) ?? false

@@ -1,6 +1,8 @@
-﻿namespace StarWindXExtLib {
+﻿namespace StarWindXExtLib
+{
 
-    public abstract class ServerControl : ParameterAppender, IServerControl {
+    public abstract class ServerControl : ParameterAppender, IServerControl
+    {
 
         [Param(false, "sendTo")]
         public abstract string SendTo { get; }

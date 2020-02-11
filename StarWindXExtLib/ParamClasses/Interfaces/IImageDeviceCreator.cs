@@ -1,6 +1,8 @@
-﻿namespace StarWindXExtLib {
+﻿namespace StarWindXExtLib
+{
 
-    public interface IImageDeviceCreator : ISimpleDeviceCreator {
+    public interface IImageDeviceCreator : ISimpleDeviceCreator
+    {
         bool Asyncmode { get; set; }
         bool Readonly { get; set; }
     }

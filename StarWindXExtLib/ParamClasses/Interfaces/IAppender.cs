@@ -1,8 +1,10 @@
 ﻿using StarWindXLib;
 
-namespace StarWindXExtLib {
+namespace StarWindXExtLib
+{
 
-    public interface IAppender {
+    public interface IAppender
+    {
 
         void AppendParams(IParameters pars);
 

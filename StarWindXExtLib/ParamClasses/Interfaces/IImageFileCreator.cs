@@ -1,6 +1,8 @@
-﻿namespace StarWindXExtLib {
+﻿namespace StarWindXExtLib
+{
 
-    public interface IImageFileCreator : IFileCreator {
+    public interface IImageFileCreator : IFileCreator
+    {
         bool Flat { get; set; }
         bool ZeroOut { get; set; }
         bool DeferredInit { get; set; }

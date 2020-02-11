@@ -1,23 +1,27 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 
-namespace StarWindXExtLib {
+namespace StarWindXExtLib
+{
 
     [AttributeUsage(AttributeTargets.Property)]
-    public class FlatParamAttribute : Attribute, IConditional {
+    public sealed class FlatParamAttribute : Attribute, IConditional
+    {
         public string Name { get; }
 
         public string Prefix { get; }
 
         public bool Enabled { get; }
 
-        public FlatParamAttribute(bool enable = true, [CallerMemberName] string propertyName = null) {
+        public FlatParamAttribute(bool enable = true, [CallerMemberName] string propertyName = null)
+        {
             Name = propertyName;
             Prefix = "";
             Enabled = enable;
         }
 
-        public FlatParamAttribute(string prefix, bool enable = true, [CallerMemberName] string propertyName = null) {
+        public FlatParamAttribute(string prefix, bool enable = true, [CallerMemberName] string propertyName = null)
+        {
             Name = propertyName;
             Prefix = prefix;
             Enabled = enable;

@@ -2,9 +2,11 @@
 
 using System;
 
-namespace StarWindXExtLib {
+namespace StarWindXExtLib
+{
 
-    public interface IAbstactValue {
+    public interface IAbstactValue
+    {
         IStarWindServer Server { get; set; }
         string Name { get; }
         bool Valid { get; }

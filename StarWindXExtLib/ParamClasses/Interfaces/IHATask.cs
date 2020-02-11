@@ -1,8 +1,10 @@
 ﻿using System;
 
-namespace StarWindXExtLib {
+namespace StarWindXExtLib
+{
 
-    public interface IHATask {
+    public interface IHATask
+    {
         string Value { get; }
 
         NodeType NodeType { get; set; }

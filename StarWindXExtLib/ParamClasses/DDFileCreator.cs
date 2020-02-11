@@ -1,8 +1,10 @@
 ﻿using StarWindXLib;
 
-namespace StarWindXExtLib {
+namespace StarWindXExtLib
+{
 
-    public class DDFileCreator : ParameterAppender, IDDFileCreator {
+    public class DDFileCreator : ParameterAppender, IDDFileCreator
+    {
         public string Path { get; set; }
         public string Name { get; set; }
 

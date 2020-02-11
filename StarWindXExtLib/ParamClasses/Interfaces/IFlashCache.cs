@@ -1,8 +1,10 @@
 ﻿using StarWindXLib;
 
-namespace StarWindXExtLib {
+namespace StarWindXExtLib
+{
 
-    public interface IFlashCache {
+    public interface IFlashCache
+    {
         string FlashStorage { get; }
 
         string SetFlashCache(IDevice device);

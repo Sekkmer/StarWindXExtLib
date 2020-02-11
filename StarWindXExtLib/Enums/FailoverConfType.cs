@@ -1,6 +1,8 @@
-﻿namespace StarWindXExtLib {
+﻿namespace StarWindXExtLib
+{
 
-    public enum FailoverConfType {
+    public enum FailoverConfType
+    {
 
         [StringValue("0")]
         Heartbeat = 0,
@@ -9,13 +11,16 @@
         NodeMajority = 1,
     }
 
-    public static partial class EnumFormat {
+    public static partial class EnumFormat
+    {
 
-        public static string ToString(this FailoverConfType type) {
+        public static string ToString(this FailoverConfType type)
+        {
             return EnumToString(type);
         }
 
-        public static void FromString(this FailoverConfType type, string str) {
+        public static void FromString(this FailoverConfType type, string str)
+        {
             EnumFromString(type, str);
         }
     }

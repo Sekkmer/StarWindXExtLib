@@ -1,22 +1,26 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 
-namespace StarWindXExtLib {
+namespace StarWindXExtLib
+{
 
     [AttributeUsage(AttributeTargets.Property)]
-    public class SubParamAttribute : Attribute, IConditional {
+    public sealed class SubParamAttribute : Attribute, IConditional
+    {
         public string Name { get; }
 
         public bool Enabled { get; }
 
         public string Prefix { get; set; } = "";
 
-        public SubParamAttribute([CallerMemberName] string propertyName = null) {
+        public SubParamAttribute([CallerMemberName] string propertyName = null)
+        {
             Name = propertyName;
             Enabled = true;
         }
 
-        public SubParamAttribute(bool enable, [CallerMemberName] string propertyName = null) {
+        public SubParamAttribute(bool enable, [CallerMemberName] string propertyName = null)
+        {
             Name = propertyName;
             Enabled = enable;
         }

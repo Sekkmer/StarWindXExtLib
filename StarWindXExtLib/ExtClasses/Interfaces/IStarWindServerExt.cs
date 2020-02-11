@@ -1,8 +1,24 @@
 ﻿using StarWindXLib;
 
-namespace StarWindXExtLib {
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-    public interface IStarWindServerExt : IStarWindServer {
+namespace StarWindXExtLib
+{
+
+    public interface IStarWindServerExt : IStarWindServer
+    {
+        new IEnumerable<IDeviceExt> Devices { get; }
+        new IEnumerable<ITargetExt> Targets { get; }
+
+        new IDeviceExt GetDeviceByID(string DeviceId);
+        new IDeviceExt CreateDevice(string Path, string Name, STARWIND_DEVICE_TYPE fileType, Parameters builder);
+        new ITargetExt CreateTarget(string targetAlias, string TargetName, Parameters builder);
+
+        Task ConnectAsync();
+        Task DisconnectAsync();
+        Task RefreshAsync();
+
         IValue<int> LogLevel { get; }
         IValue<string> LogMask { get; }
         IValue<int> LogRotateSize { get; }

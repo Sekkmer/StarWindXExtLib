@@ -1,10 +1,12 @@
-﻿namespace StarWindXExtLib {
+﻿namespace StarWindXExtLib
+{
 
-    public interface IRamDeviceCreator : IDeviceCreator, ISectorSize {
+    public interface IRamDeviceCreator : IDeviceCreator, ISectorSize
+    {
 
         void SetSize(int size);
 
         bool Useawe { get; set; }
-        CacheFormat Format { get; set; }
+        FileSystemFormat Format { get; set; }
     }
 }

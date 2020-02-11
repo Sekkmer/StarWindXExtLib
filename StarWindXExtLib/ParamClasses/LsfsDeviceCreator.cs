@@ -2,9 +2,11 @@
 
 using System;
 
-namespace StarWindXExtLib {
+namespace StarWindXExtLib
+{
 
-    public class LsfsDeviceCreator : ParameterAppender, ILsfsDeviceCreator {
+    public class LsfsDeviceCreator : ParameterAppender, ILsfsDeviceCreator
+    {
         public string Path => File.Path;
         public string Name => File.Name;
 
@@ -51,7 +53,7 @@ namespace StarWindXExtLib {
         public string FlashStorage { get; set; } = "";
 
         [EnableParam("FlashCache", "storage")]
-        public bool EnableFlashCache => FlashStorage != "";
+        public bool EnableFlashCache => !string.IsNullOrEmpty(FlashStorage);
 
         [Param(false, "PMCacheSize")]
         public int StarPackCache { get; set; } = 16;
@@ -68,18 +70,21 @@ namespace StarWindXExtLib {
         [EnableParam("EsxComatibleMode")]
         public bool EnableEsxComatibleMode { get; set; } = false;
 
-        public LsfsDeviceCreator(IDDFileCreator file) {
+        public LsfsDeviceCreator(IDDFileCreator file)
+        {
             File = file;
         }
 
-        public LsfsDeviceCreator(IDDFileCreator file, IDevice flashDevice) {
+        public LsfsDeviceCreator(IDDFileCreator file, IDevice flashDevice)
+        {
             File = file;
             FlashStorage = flashDevice.File;
             FlashCache.SizeInMB = Convert.ToInt32(flashDevice.Size);
         }
 
-        public string SetFlashCache(IDevice device) {
-            if (device is null && device.DeviceType == "Image file" && device.Size != "" && device.Size != "empty") {
+        public string SetFlashCache(IDevice device)
+        {
+            if (device is null && device.DeviceType == "Image file" && device.Size.Length != 0 && device.Size != "empty") {
                 FlashStorage = "";
                 return FlashStorage;
             }

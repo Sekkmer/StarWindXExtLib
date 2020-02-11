@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace StarWindXExtLib {
+namespace StarWindXExtLib
+{
 
-    public class AdvancedHANodes : ParameterAppender, IAdvancedHANodes {
+    public class AdvancedHANodes : ParameterAppender, IAdvancedHANodes
+    {
 
         [Param] public string Priority { get; private set; }
 
@@ -43,13 +45,15 @@ namespace StarWindXExtLib {
                 { "AuthChapType", 1 }
             };
 
-        public AdvancedHANodes() {}
+        public AdvancedHANodes() { }
 
-        public AdvancedHANodes(List<IAdvancedHANode> nodes) {
+        public AdvancedHANodes(List<IAdvancedHANode> nodes)
+        {
             LoadNodes(nodes);
         }
 
-        public void LoadNodes(List<IAdvancedHANode> nodes) {
+        public void LoadNodes(List<IAdvancedHANode> nodes)
+        {
             Nodes = nodes;
             foreach (var prop in GetType().GetProperties()) {
                 if (!prop.CanWrite) { continue; }
@@ -58,7 +62,7 @@ namespace StarWindXExtLib {
                 }
                 prop.SetValue(this, ConcatValues(prop.Name, nodes));
             }
-            EnableJournalStorage = nodes.Exists(node => node.JournalStorage != "");
+            EnableJournalStorage = nodes.Exists(node => !string.IsNullOrEmpty(node.JournalStorage));
             PartnerIP = "";
             for (var i = 1; i < Count; i++) {
                 if (i > 2 && i < Count - 1) { PartnerIP += ";"; }
@@ -66,7 +70,8 @@ namespace StarWindXExtLib {
             }
         }
 
-        private static string ConcatValues(string name, List<IAdvancedHANode> nodes) {
+        private static string ConcatValues(string name, List<IAdvancedHANode> nodes)
+        {
             var value = "";
             var index = 0;
             var from = ConcatFrom[name];
@@ -79,7 +84,8 @@ namespace StarWindXExtLib {
             return value;
         }
 
-        public List<T> Transform<T>(Converter<IAdvancedHANode, T> convert) {
+        public List<T> Transform<T>(Converter<IAdvancedHANode, T> convert)
+        {
             return Nodes.ConvertAll(convert);
         }
     }

@@ -1,6 +1,8 @@
-﻿namespace StarWindXExtLib {
+﻿namespace StarWindXExtLib
+{
 
-    public interface IConditional {
+    public interface IConditional
+    {
         string Name { get; }
         bool Enabled { get; }
     }

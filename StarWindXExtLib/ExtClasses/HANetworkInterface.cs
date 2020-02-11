@@ -1,30 +1,66 @@
-﻿namespace StarWindXExtLib {
+﻿using StarWindXLib;
 
-    public class HANetworkInterface : Displayable, IHANetworkInterface {
+namespace StarWindXExtLib
+{
 
-        [Display(0)]
+    public class HANetworkInterface : IHANetworkInterface
+    {
+
         public string IPAddress { get; }
 
-        [Display(1)]
-        public int Port { get; }
+        public string Port { get; }
 
-        [Display(2)]
+        public string SubnetMask => "";
+
+        public string MACAddress => "";
+
         public bool Valid { get; }
 
-        [Display(3)]
         public int PartnerId { get; }
 
-        [Display(4, "Interface Type")]
         public NetworkInterfaceType InterfaceType { get; }
 
-        public override string UniqueId => PartnerId.ToString() + ":" + IPAddress + ":" + Port + ":" + InterfaceType.ToString();
-
-        public HANetworkInterface(int partnerId, NetworkInterfaceType type, string ip, int port, bool valid = true) {
+        internal HANetworkInterface(int partnerId, NetworkInterfaceType type, string ip, string port, bool valid = true)
+        {
             IPAddress = ip;
             Port = port;
             Valid = valid;
             PartnerId = partnerId;
             InterfaceType = type;
+        }
+
+        internal HANetworkInterface(int partnerId, NetworkInterfaceType type, string data)
+        {
+            var array = data.Split('$');
+            IPAddress = array[0];
+            Port = array[1];
+            Valid = array[2] == "1";
+            PartnerId = partnerId;
+            InterfaceType = type;
+        }
+    }
+
+    public class NetworkInterfaceExt : IHANetworkInterface
+    {
+        public readonly INetworkInterface iface;
+
+        public bool Valid => true;
+
+        public int PartnerId => -1;
+
+        public NetworkInterfaceType InterfaceType => NetworkInterfaceType.Unknown;
+
+        public string IPAddress => iface.IPAddress;
+
+        public string Port => iface.Port;
+
+        public string SubnetMask => iface.SubnetMask;
+
+        public string MACAddress => iface.MACAddress;
+
+        public NetworkInterfaceExt(INetworkInterface iface)
+        {
+            this.iface = iface;
         }
     }
 }

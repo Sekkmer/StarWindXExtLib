@@ -1,6 +1,8 @@
-﻿namespace StarWindXExtLib {
+﻿namespace StarWindXExtLib
+{
 
-    public class AdvancedHADeviceCreator : ParameterAppender, IAdvancedHADeviceCreator {
+    public class AdvancedHADeviceCreator : ParameterAppender, IAdvancedHADeviceCreator
+    {
         public string Name => DeviceName;
 
         public string DeviceName { get; set; }

@@ -1,8 +1,11 @@
 ﻿using StarWindXLib;
 
-namespace StarWindXExtLib {
+using System.Threading.Tasks;
 
-    public interface IDeviceExt : IDevice {
+namespace StarWindXExtLib
+{
+    public interface IDeviceExt : IDevice
+    {
         int PhySectorSize { get; }
         string ParentDevice { get; }
         string DeviceHeaderPath { get; }
@@ -11,5 +14,10 @@ namespace StarWindXExtLib {
         int L1CachePercentOfHits { get; }
         string Path { get; }
         bool Attached { get; }
+
+        Task RefreshAsync();
+        Task ExtendDeviceAsync(int sizeToExtendInMB);
+        Task TakeSnapshotAsync(string Name, string description);
+        Task DeleteSnapshotAsync(ulong snapshotID);
     }
 }

@@ -1,8 +1,10 @@
 ﻿using System;
 
-namespace StarWindXExtLib {
+namespace StarWindXExtLib
+{
 
-    public class HATask : IHATask {
+    public class HATask : IHATask
+    {
 
         public string Value {
             get {
@@ -27,21 +29,17 @@ namespace StarWindXExtLib {
 
         public int NodeTypeInt {
             get {
-                switch (NodeType) {
-                    case NodeType.Synchronous:
-                        return 5;
-
-                    case NodeType.Asynchronous:
-                        return 4;
-
-                    case NodeType.Witness:
-                        return 0;
-                }
-                return 0;
+                return NodeType switch
+                {
+                    NodeType.Synchronous => 5,
+                    NodeType.Asynchronous => 4,
+                    NodeType.Witness => 0,
+                    _ => -1,
+                };
             }
         }
 
-        public DateTime Time { get; set; } 
+        public DateTime Time { get; set; }
         public int Unknown1 { get; set; } = 0;
         public int RepeatInterval { get; set; } = 0;
         public int Unknown2 { get; set; } = 0;

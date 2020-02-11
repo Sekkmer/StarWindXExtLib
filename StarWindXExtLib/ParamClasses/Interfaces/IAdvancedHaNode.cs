@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 
-namespace StarWindXExtLib {
+namespace StarWindXExtLib
+{
 
-    public interface IAdvancedHANode : ICache {
+    public interface IAdvancedHANode : ICache
+    {
         int NodeId { get; }
         bool IsAutoSynchEnabled { get; set; }
         bool IsALUAOptimized { get; set; }

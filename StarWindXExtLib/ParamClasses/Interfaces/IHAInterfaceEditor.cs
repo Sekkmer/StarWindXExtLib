@@ -1,6 +1,8 @@
-﻿namespace StarWindXExtLib {
+﻿namespace StarWindXExtLib
+{
 
-    public interface IHAInterfaceEditor : IServerControl {
+    public interface IHAInterfaceEditor : IServerControl
+    {
         int Priority { get; set; }
     }
 }

@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace StarWindXExtLib {
+namespace StarWindXExtLib
+{
 
-    public class AdvancedHANode : IAdvancedHANode {
+    public class AdvancedHANode : IAdvancedHANode
+    {
         public int NodeId { get; }
 
         public bool IsAutoSynchEnabled { get; set; } = true;
@@ -34,7 +36,8 @@ namespace StarWindXExtLib {
 
         public Dictionary<int, List<string>> PartnerIP { get; } = new Dictionary<int, List<string>>();
 
-        public string GetValue(string name) {
+        public string GetValue(string name)
+        {
             var obj = GetType().GetProperty(name).GetValue(this);
             if (obj is string str) {
                 return str;
@@ -42,7 +45,7 @@ namespace StarWindXExtLib {
                 return EnumFormat.EnumToString(type);
             } else {
                 try {
-                return obj.ToString();    
+                    return obj.ToString();
                 } catch (System.Exception e) {
                     MessageBox.Show(name + "\n\n" + e.Message);
                     throw;
@@ -50,7 +53,8 @@ namespace StarWindXExtLib {
             }
         }
 
-        public AdvancedHANode(int id) {
+        public AdvancedHANode(int id)
+        {
             NodeId = id;
         }
     }

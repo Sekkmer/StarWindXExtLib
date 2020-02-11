@@ -1,17 +1,19 @@
 ﻿using StarWindXLib;
 
 using System;
+using System.Collections.Generic;
 
-namespace StarWindXExtLib {
-
-    public interface IHAPartnerExt {
+namespace StarWindXExtLib
+{
+    public interface IHAPartnerExt
+    {
         int PartnerId { get; }
         string TargetName { get; }
         int Priority { get; }
         NodeType Type { get; }
         string StorageDeviceType { get; }
-        ICollection SynchronizationChannels { get; }
-        ICollection HeartbeatChannels { get; }
+        IEnumerable<IHANetworkInterface> SynchronizationChannels { get; }
+        IEnumerable<IHANetworkInterface> HeartbeatChannels { get; }
         bool SynchronizationValidConnection { get; }
         bool HeartbeatValidConnection { get; }
         SW_HA_SYNC_STATUS SyncStatus { get; }

@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 
-namespace StarWindXExtLib {
+namespace StarWindXExtLib
+{
 
-    public interface IHAImageHeaderCreator : IServerControl, ICache {
+    public interface IHAImageHeaderCreator : IServerControl, ICache
+    {
         IAdvancedHANodes Nodes { get; set; }
         string SerialId { get; set; }
         string Product { get; set; }

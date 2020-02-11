@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace StarWindXExtLib {
+namespace StarWindXExtLib
+{
 
-    public interface IAdvancedHANodes : IAppender {
+    public interface IAdvancedHANodes : IAppender
+    {
         string Priority { get; }
         string NodeType { get; }
         string JournalStorage { get; }

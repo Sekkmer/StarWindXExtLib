@@ -1,8 +1,10 @@
 ﻿using StarWindXLib;
 
-namespace StarWindXExtLib {
+namespace StarWindXExtLib
+{
 
-    public class HADeviceCreator : ParameterAppender, IHADeviceCreator {
+    public class HADeviceCreator : ParameterAppender, IHADeviceCreator
+    {
         public string Path => FirstNode.Path;
 
         public string Name => FirstNode.BaseName;

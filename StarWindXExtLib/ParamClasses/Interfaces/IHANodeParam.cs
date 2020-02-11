@@ -1,8 +1,10 @@
 ﻿using StarWindXLib;
 
-namespace StarWindXExtLib {
+namespace StarWindXExtLib
+{
 
-    public interface IHANodeParam : ICache {
+    public interface IHANodeParam : ICache
+    {
         string HostName { get; set; }
         int PortNumber { get; set; }
         string UserName { get; set; }

@@ -1,12 +1,12 @@
-﻿using StarWindXLib;
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace StarWindXExtLib {
+namespace StarWindXExtLib
+{
 
-    public class TargetCreator : ParameterAppender, ITargetCreator {
+    public class TargetCreator : ParameterAppender, ITargetCreator
+    {
         public string DirectCommand => "addtarget " + Name;
 
         public static string TargetNamePrefix { get; set; } = "iqn.2008-08.com.starwindsoftware";
@@ -17,7 +17,7 @@ namespace StarWindXExtLib {
         public string Alias { get; set; }
 
         private string name;
-        private bool AutoName => name is null || name == "";
+        private bool AutoName => string.IsNullOrEmpty(name);
 
         public string Name {
             get {
@@ -44,7 +44,7 @@ namespace StarWindXExtLib {
         [EnableParam("devices")]
         public bool EnableDevices => DevicesToAttach.Count > 0;
 
-        public List<IDevice> DevicesToAttach { get; } = new List<IDevice>();
+        public List<IDeviceExt> DevicesToAttach { get; } = new List<IDeviceExt>();
 
         [Description("For bypassing IStarWindServer.CreateTarget() function")]
         [EnableParam("alias")]

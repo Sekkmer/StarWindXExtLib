@@ -1,6 +1,8 @@
-﻿namespace StarWindXExtLib {
+﻿namespace StarWindXExtLib
+{
 
-    public interface ICache {
+    public interface ICache
+    {
         ICacheParam Cache { get; }
     }
 }
