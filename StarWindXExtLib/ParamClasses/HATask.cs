@@ -2,39 +2,43 @@
 
 namespace StarWindXExtLib
 {
-
     public class HATask : IHATask
     {
-
-        public string Value {
-            get {
-                var utc = (DateTimeOffset)DateTime.SpecifyKind(Time, DateTimeKind.Utc);
-                try {
+        public string Value
+        {
+            get
+            {
+                var utc = (DateTimeOffset) DateTime.SpecifyKind(Time, DateTimeKind.Utc);
+                try
+                {
                     return
-                        NodeTypeInt.ToString() + ":" +
-                        utc.ToUnixTimeSeconds().ToString() + ":" +
-                        Unknown1.ToString() + ":" +
-                        RepeatInterval.ToString() + ":" +
-                        Unknown2.ToString() +
-                        (Preserve == 0 ? "" : ":" + Preserve.ToString());
-                } catch (Exception) {
+                        NodeTypeInt + ":" +
+                        utc.ToUnixTimeSeconds() + ":" +
+                        Unknown1 + ":" +
+                        RepeatInterval + ":" +
+                        Unknown2 +
+                        (Preserve == 0 ? "" : ":" + Preserve);
+                }
+                catch (Exception)
+                {
                     return "";
                 }
-
             }
         }
 
 
         public NodeType NodeType { get; set; } = NodeType.Synchronous;
 
-        public int NodeTypeInt {
-            get {
+        public int NodeTypeInt
+        {
+            get
+            {
                 return NodeType switch
                 {
                     NodeType.Synchronous => 5,
                     NodeType.Asynchronous => 4,
                     NodeType.Witness => 0,
-                    _ => -1,
+                    _ => -1
                 };
             }
         }

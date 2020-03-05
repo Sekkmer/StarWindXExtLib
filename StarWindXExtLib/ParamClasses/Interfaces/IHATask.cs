@@ -2,7 +2,6 @@
 
 namespace StarWindXExtLib
 {
-
     public interface IHATask
     {
         string Value { get; }

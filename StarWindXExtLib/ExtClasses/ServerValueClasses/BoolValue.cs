@@ -2,15 +2,15 @@
 
 namespace StarWindXExtLib
 {
-
-    internal class BoolValue : AbstactValue<bool>
+    public interface IBoolValue : IValue<bool> { }
+    internal class BoolValue : AbstractValue<bool>, IBoolValue
     {
-        public string TrueString { get; set; } = "yes";
-        public string FalseString { get; set; } = "no";
-
-        public BoolValue([CallerMemberName]string name = null) : base(name)
+        public BoolValue([CallerMemberName] string name = null) : base(name)
         {
         }
+
+        public string TrueString { get; set; } = "yes";
+        public string FalseString { get; set; } = "no";
 
         protected override bool FromString(string value)
         {

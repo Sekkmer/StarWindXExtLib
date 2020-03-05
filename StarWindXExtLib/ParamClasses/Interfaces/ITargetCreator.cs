@@ -1,10 +1,8 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace StarWindXExtLib
 {
-
     public interface ITargetCreator : IAppender
     {
         string Alias { get; set; }

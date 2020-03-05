@@ -1,6 +1,5 @@
 ﻿namespace StarWindXExtLib
 {
-
     public interface ICacheParam
     {
         CacheMode CacheMode { get; set; }

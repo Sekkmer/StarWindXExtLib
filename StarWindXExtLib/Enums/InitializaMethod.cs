@@ -1,18 +1,16 @@
 ﻿namespace StarWindXExtLib
 {
-
     public enum InitializaMethod
     {
         [StringValue] Clear,
         [StringValue] NotSynchronize,
         [StringValue] SyncFromFirst,
         [StringValue] SyncFromSecond,
-        [StringValue] SyncFromThird,
+        [StringValue] SyncFromThird
     }
 
     public static partial class EnumFormat
     {
-
         public static string ToString(this InitializaMethod format)
         {
             return EnumToString(format);

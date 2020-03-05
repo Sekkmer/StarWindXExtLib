@@ -1,10 +1,8 @@
-﻿using StarWindXLib;
-
-using System;
+﻿using System;
+using StarWindXLib;
 
 namespace StarWindXExtLib
 {
-
     internal class LSFSDeviceExt : DeviceExt, ILSFSDeviceExt
     {
         private readonly ILSFSDevice lsfsDevice;
@@ -14,27 +12,16 @@ namespace StarWindXExtLib
             lsfsDevice = lsfs;
         }
 
-        #region ILSFSDevice
+        private string MountStatusString => GetPropertyValue("MountStatus");
 
-        public string DeduplicationRatio => lsfsDevice.DeduplicationRatio;
 
-        public string UserDataSize => lsfsDevice.UserDataSize;
-
-        public string MetaDataSize => lsfsDevice.MetaDataSize;
-
-        public string AllocatedPhysicalSize => lsfsDevice.AllocatedPhysicalSize;
-
-        public string DeviceFragmentedPercent => lsfsDevice.DeviceFragmentedPercent;
-
-        #endregion ILSFSDevice
+        private string ModeString => GetPropertyValue("mode");
 
         public bool DeduplicationEnabled => GetPropertyValue("DeduplicationEnabled") == "yes";
 
         public bool IsDeviceASnapshot => GetPropertyValue("IsDeviceASnapshot") == "yes";
 
         public bool SnapshotInProgress => GetPropertyValue("SnapshotInProgress") == "yes";
-
-        private string MountStatusString => GetPropertyValue("MountStatus");
 
         public SW_LSFS_MOUNT_STATUS MountStatus => GetMountStatus();
 
@@ -58,25 +45,42 @@ namespace StarWindXExtLib
 
         public CacheMode L2CacheMode => EnumFormat.ToCacheMode(L2CacheModeString);
 
-
-        private string ModeString => GetPropertyValue("mode");
-
         private SW_LSFS_MODE GetMode()
         {
-            try {
-                return (SW_LSFS_MODE)Convert.ToInt32(ModeString);
-            } catch (Exception) {
+            try
+            {
+                return (SW_LSFS_MODE) Convert.ToInt32(ModeString);
+            }
+            catch (Exception)
+            {
                 return SW_LSFS_MODE.Unknown;
             }
         }
 
         private SW_LSFS_MOUNT_STATUS GetMountStatus()
         {
-            try {
-                return (SW_LSFS_MOUNT_STATUS)Convert.ToInt32(MountStatusString);
-            } catch (Exception) {
+            try
+            {
+                return (SW_LSFS_MOUNT_STATUS) Convert.ToInt32(MountStatusString);
+            }
+            catch (Exception)
+            {
                 return SW_LSFS_MOUNT_STATUS.Unknown;
             }
         }
+
+        #region ILSFSDevice
+
+        public string DeduplicationRatio => lsfsDevice.DeduplicationRatio;
+
+        public string UserDataSize => lsfsDevice.UserDataSize;
+
+        public string MetaDataSize => lsfsDevice.MetaDataSize;
+
+        public string AllocatedPhysicalSize => lsfsDevice.AllocatedPhysicalSize;
+
+        public string DeviceFragmentedPercent => lsfsDevice.DeviceFragmentedPercent;
+
+        #endregion ILSFSDevice
     }
 }

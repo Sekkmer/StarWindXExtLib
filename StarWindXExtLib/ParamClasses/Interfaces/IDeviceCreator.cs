@@ -2,7 +2,6 @@
 
 namespace StarWindXExtLib
 {
-
     public interface IDeviceCreator : IAppender
     {
         string Path { get; }

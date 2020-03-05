@@ -2,7 +2,6 @@
 
 namespace StarWindXExtLib
 {
-
     public interface IScheduler : IServerCommand
     {
         IHADeviceExt Device { get; set; }

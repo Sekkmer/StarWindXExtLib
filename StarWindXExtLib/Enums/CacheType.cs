@@ -1,22 +1,16 @@
 ﻿namespace StarWindXExtLib
 {
-
     public enum CacheMode
     {
+        [StringValue("none")] None,
 
-        [StringValue("none")]
-        None,
+        [StringValue("wb")] WriteBack,
 
-        [StringValue("wb")]
-        WriteBack,
-
-        [StringValue("wt")]
-        WriteThrough
+        [StringValue("wt")] WriteThrough
     }
 
     public static partial class EnumFormat
     {
-
         public static string ToString(this CacheMode type)
         {
             return EnumToString(type);

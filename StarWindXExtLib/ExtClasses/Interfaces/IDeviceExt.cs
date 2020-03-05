@@ -1,6 +1,5 @@
-﻿using StarWindXLib;
-
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using StarWindXLib;
 
 namespace StarWindXExtLib
 {

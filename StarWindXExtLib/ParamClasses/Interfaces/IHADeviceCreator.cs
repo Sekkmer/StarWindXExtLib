@@ -1,6 +1,5 @@
 ﻿namespace StarWindXExtLib
 {
-
     public interface IHADeviceCreator : IDeviceCreator
     {
         InitializaMethod InitializaMethod { get; set; }

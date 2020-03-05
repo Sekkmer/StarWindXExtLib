@@ -1,11 +1,12 @@
 ﻿namespace StarWindXExtLib
 {
-
     public class HAInterfaceEditor : ServerControl, IHAInterfaceEditor
     {
-        public override string SendTo => Device.DeviceId;
-
-        public override string Request => "AddRemovePartnerInterface";
+        public HAInterfaceEditor(IHADeviceExt device, IHANetworkInterface iface)
+        {
+            Device = device;
+            IFace = iface;
+        }
 
         public override string RequestValue { get; protected set; } = "";
 
@@ -19,16 +20,12 @@
         [Param] public string IP => IFace.IPAddress;
         [Param] public string Port => IFace.Port;
 
-        [Param(false)]
-        public int Priority { get; set; }
-
         public IHADeviceExt Device { get; }
         public IHANetworkInterface IFace { get; }
+        public override string SendTo => Device.DeviceId;
 
-        public HAInterfaceEditor(IHADeviceExt device, IHANetworkInterface iface)
-        {
-            Device = device;
-            IFace = iface;
-        }
+        public override string Request => "AddRemovePartnerInterface";
+
+        [Param(false)] public int Priority { get; set; }
     }
 }

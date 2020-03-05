@@ -2,7 +2,6 @@
 
 namespace StarWindXExtLib
 {
-
     public interface IControlInterface
     {
         string HostName { get; }

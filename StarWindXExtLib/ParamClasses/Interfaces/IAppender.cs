@@ -2,10 +2,8 @@
 
 namespace StarWindXExtLib
 {
-
     public interface IAppender
     {
-
         void AppendParams(IParameters pars);
 
         void AppendParam(string paramName, string paramValue);

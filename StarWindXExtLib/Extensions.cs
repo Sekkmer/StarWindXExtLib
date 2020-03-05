@@ -1,7 +1,6 @@
-﻿using StarWindXLib;
-
-using System;
+﻿using System;
 using System.Net;
+using StarWindXLib;
 
 namespace StarWindXExtLib
 {
@@ -9,22 +8,18 @@ namespace StarWindXExtLib
     {
         internal static IDeviceExt ToExt(this IDevice device)
         {
-            if (device is IDeviceExt ext) {
+            if (device is IDeviceExt ext)
                 return ext;
-            } else if (device is IHADevice ha) {
+            if (device is IHADevice ha)
                 return new HADeviceExt(ha);
-            } else if (device is ILSFSDevice lsfs) {
+            if (device is ILSFSDevice lsfs)
                 return new LSFSDeviceExt(lsfs);
-            } else {
-                return new DeviceExt(device);
-            }
+            return new DeviceExt(device);
         }
 
         internal static ITargetExt ToExt(this ITarget target)
         {
-            if (target is TargetExt ext) {
-                return ext;
-            }
+            if (target is TargetExt ext) return ext;
             return new TargetExt(target);
         }
 
@@ -48,13 +43,12 @@ namespace StarWindXExtLib
         }
 
         [Obsolete("Curently not working: StarWindX issue with ParametersClass", false)]
-        public static void MountSnapshot(this IStarWindServer server, IHADevice device, ISnapshot snapshot, ITarget target = null)
+        public static void MountSnapshot(this IStarWindServer server, IHADevice device, ISnapshot snapshot,
+            ITarget target = null)
         {
             var pars = new Parameters();
             pars.AppendParam("MountSnapshot", snapshot.Id.ToString());
-            if (target != null) {
-                pars.AppendParam("TargetName", target.Name);
-            }
+            if (target != null) pars.AppendParam("TargetName", target.Name);
             pars.AppendParam("Async", "yes");
             pars.AppendParam("sendTo", device.DeviceId);
             server.ExecuteCommand(STARWIND_COMMAND_TYPE.STARWIND_CONTROL_REQUEST, "", pars);
@@ -62,7 +56,8 @@ namespace StarWindXExtLib
 
         public static IDeviceExt CreateDevice(this IStarWindServer server, IDeviceCreator creator)
         {
-            return server.CreateDevice(creator.Path, creator.Name, creator.DeviceType, creator.GenerateParams()).ToExt();
+            return server.CreateDevice(creator.Path, creator.Name, creator.DeviceType, creator.GenerateParams())
+                .ToExt();
         }
 
         public static void CreateFile(this IStarWindServer server, IFileCreator creator)
@@ -88,7 +83,8 @@ namespace StarWindXExtLib
 
         public static ICommandResult CommandEx(this IStarWindServer server, IServerCommand command)
         {
-            server.ExecuteCommandEx(STARWIND_COMMAND_TYPE.STARWIND_COMMAND, command.Command, command.GenerateParams(), out var result);
+            server.ExecuteCommandEx(STARWIND_COMMAND_TYPE.STARWIND_COMMAND, command.Command, command.GenerateParams(),
+                out var result);
             return result;
         }
 
@@ -99,7 +95,8 @@ namespace StarWindXExtLib
 
         public static ICommandResult ControlEx(this IStarWindServer server, IServerControl control)
         {
-            server.ExecuteCommandEx(STARWIND_COMMAND_TYPE.STARWIND_CONTROL_REQUEST, "", control.GenerateParams(), out var result);
+            server.ExecuteCommandEx(STARWIND_COMMAND_TYPE.STARWIND_CONTROL_REQUEST, "", control.GenerateParams(),
+                out var result);
             return result;
         }
 

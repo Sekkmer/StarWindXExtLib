@@ -1,16 +1,14 @@
-﻿using StarWindXLib;
-
-using System;
+﻿using System;
+using StarWindXLib;
 
 namespace StarWindXExtLib
 {
-
     public enum SW_LSFS_MODE
     {
         Unknown = 0,
         Normal = 1,
         ReadOnly = 2,
-        ManagementMode = 7,
+        ManagementMode = 7
     }
 
     public enum SW_LSFS_MOUNT_STATUS
@@ -19,7 +17,7 @@ namespace StarWindXExtLib
         Failed = 0,
         Created = 1,
         Creating = 2,
-        Mounting = 3,
+        Mounting = 3
     }
 
     public interface ILSFSDeviceExt : IDeviceExt, ILSFSDevice

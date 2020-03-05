@@ -1,7 +1,6 @@
 ﻿namespace StarWindXExtLib
 {
-
-    public interface IValue<T> : IAbstactValue
+    public interface IValue<T> : IAbstractValue
     {
         T Value { get; set; }
     }

@@ -3,14 +3,9 @@ using System.Runtime.CompilerServices;
 
 namespace StarWindXExtLib
 {
-
     [AttributeUsage(AttributeTargets.Property)]
     public sealed class ParamAttribute : Attribute, IConditional
     {
-        public string Name { get; }
-
-        public bool Enabled { get; }
-
         public ParamAttribute([CallerMemberName] string propertyName = null)
         {
             Name = propertyName;
@@ -22,5 +17,9 @@ namespace StarWindXExtLib
             Name = propertyName;
             Enabled = enable;
         }
+
+        public string Name { get; }
+
+        public bool Enabled { get; }
     }
 }

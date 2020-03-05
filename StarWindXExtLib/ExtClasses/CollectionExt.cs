@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using ICollection = StarWindXLib.ICollection;
 
 namespace StarWindXExtLib
 {
-    internal class CollectionExt<T> : StarWindXLib.ICollection
+    internal class CollectionExt<T> : ICollection
     {
         private readonly IEnumerable<T> enumerable;
 
@@ -15,7 +16,7 @@ namespace StarWindXExtLib
 
         public object Item(object index)
         {
-            return enumerable.ElementAt((int)index);
+            return enumerable.ElementAt((int) index);
         }
 
         public IEnumerator GetEnumerator()

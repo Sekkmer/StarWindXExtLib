@@ -1,14 +1,13 @@
-﻿using StarWindXLib;
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using StarWindXLib;
 
 namespace StarWindXExtLib
 {
     internal class TargetExt : ITargetExt
     {
-        readonly ITarget target;
+        private readonly ITarget target;
 
         public TargetExt(ITarget target)
         {

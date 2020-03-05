@@ -1,16 +1,67 @@
-﻿using StarWindXLib;
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using StarWindXLib;
 
 namespace StarWindXExtLib
 {
     public class StarWindServerExt : IStarWindServerExt
     {
+        public static readonly IStarWindX Component = new StarWindX();
+
+        public StarWindServerExt(IStarWindServer server)
+        {
+            Server = server;
+            foreach (var prop in GetType().GetProperties())
+            {
+                if (!prop.PropertyType.GetInterfaces().Contains(typeof(IAbstractValue))) continue;
+                if (!prop.CanRead) continue;
+                if (prop.GetValue(this) is IAbstractValue value) value.Server = this;
+            }
+        }
+
+        public StarWindServerExt(string ip, int port)
+            : this(Component.CreateServer(ip, port))
+        {
+        }
+
         private IStarWindServer Server { get; }
 
-        public static readonly IStarWindX Component = new StarWindX();
+        public IEnumerable<ITargetExt> Targets => Server.Targets.Cast<ITarget>().Select(target => target.ToExt());
+
+        public IEnumerable<IDeviceExt> Devices => Server.Devices.Cast<IDevice>().Select(device => device.ToExt());
+
+        public IDeviceExt GetDeviceByID(string DeviceId)
+        {
+            return Server.GetDeviceByID(DeviceId).ToExt();
+        }
+
+        public IDeviceExt CreateDevice(string Path, string Name, STARWIND_DEVICE_TYPE fileType, Parameters builder)
+        {
+            return Server.CreateDevice(Path, Name, fileType, builder).ToExt();
+        }
+
+        public ITargetExt CreateTarget(string targetAlias, string TargetName, Parameters builder)
+        {
+            return Server.CreateTarget(targetAlias, TargetName, builder).ToExt();
+        }
+
+        public static STARWIND_DEVICE_TYPE GetDeviceType(string deviceType)
+        {
+            if (deviceType == "Image file") return STARWIND_DEVICE_TYPE.STARWIND_IMAGE_DEVICE;
+            if (deviceType == "RAM disk") return STARWIND_DEVICE_TYPE.STARWIND_RAM_DEVICE;
+            if (deviceType == "LSFS Disk") return STARWIND_DEVICE_TYPE.STARWIND_DD_LSFS_DEVICE;
+
+            // ...
+            if (deviceType == "DiskBridge") return STARWIND_DEVICE_TYPE.STARWIND_CUSTOM_DEVICE;
+            if (deviceType == "Control Device") return STARWIND_DEVICE_TYPE.STARWIND_CUSTOM_DEVICE;
+            return STARWIND_DEVICE_TYPE.STARWIND_CUSTOM_DEVICE;
+        }
+
+        public static string GetServerName(IStarWindServerExt server)
+        {
+            return "_" + server.IP.Replace('.', '_') + "_" + server.Port;
+        }
 
         #region IStarWindServer
 
@@ -34,7 +85,8 @@ namespace StarWindXExtLib
             Server.CreateFile(Path, Name, fileType, builder);
         }
 
-        IDevice IStarWindServer.CreateDevice(string Path, string Name, STARWIND_DEVICE_TYPE fileType, Parameters builder)
+        IDevice IStarWindServer.CreateDevice(string Path, string Name, STARWIND_DEVICE_TYPE fileType,
+            Parameters builder)
         {
             return Server.CreateDevice(Path, Name, fileType, builder).ToExt();
         }
@@ -89,7 +141,8 @@ namespace StarWindXExtLib
             return Server.GetLicensedPlugins(delimiter);
         }
 
-        public string ShowFileBrowser(STARWIND_PLUGIN_ID pluginID, IFileBrowserEvents eventsCallback, out bool pCancelled)
+        public string ShowFileBrowser(STARWIND_PLUGIN_ID pluginID, IFileBrowserEvents eventsCallback,
+            out bool pCancelled)
         {
             return Server.ShowFileBrowser(pluginID, eventsCallback, out pCancelled);
         }
@@ -129,17 +182,20 @@ namespace StarWindXExtLib
             Server.SetServerParameter(paramName, paramValue);
         }
 
-        public ICollection QueryServerPerformanceData(SW_PERFORMANCE_COUNTER_TYPE counterType, SW_PERFORMANCE_TIME_INTERVAL timeInterval)
+        public ICollection QueryServerPerformanceData(SW_PERFORMANCE_COUNTER_TYPE counterType,
+            SW_PERFORMANCE_TIME_INTERVAL timeInterval)
         {
             return Server.QueryServerPerformanceData(counterType, timeInterval);
         }
 
-        public ICollection QueryTargetPerformanceData(SW_PERFORMANCE_COUNTER_TYPE counterType, string TargetName, SW_PERFORMANCE_TIME_INTERVAL timeInterval)
+        public ICollection QueryTargetPerformanceData(SW_PERFORMANCE_COUNTER_TYPE counterType, string TargetName,
+            SW_PERFORMANCE_TIME_INTERVAL timeInterval)
         {
             return Server.QueryTargetPerformanceData(counterType, TargetName, timeInterval);
         }
 
-        public ICollection QueryDevicePerformanceData(SW_PERFORMANCE_COUNTER_TYPE counterType, string deviceName, SW_PERFORMANCE_TIME_INTERVAL timeInterval)
+        public ICollection QueryDevicePerformanceData(SW_PERFORMANCE_COUNTER_TYPE counterType, string deviceName,
+            SW_PERFORMANCE_TIME_INTERVAL timeInterval)
         {
             return Server.QueryDevicePerformanceData(counterType, deviceName, timeInterval);
         }
@@ -149,13 +205,23 @@ namespace StarWindXExtLib
             Server.InstallLicense(licenseFile);
         }
 
-        public void ExecuteCommandEx(STARWIND_COMMAND_TYPE cmdType, string commandName, Parameters builder, out ICommandResult pVal)
+        public void ExecuteCommandEx(STARWIND_COMMAND_TYPE cmdType, string commandName, Parameters builder,
+            out ICommandResult pVal)
         {
             Server.ExecuteCommandEx(cmdType, commandName, builder, out pVal);
         }
 
-        public string IP { get => Server.IP; set => Server.IP = value; }
-        public int Port { get => Server.Port; set => Server.Port = value; }
+        public string IP
+        {
+            get => Server.IP;
+            set => Server.IP = value;
+        }
+
+        public int Port
+        {
+            get => Server.Port;
+            set => Server.Port = value;
+        }
 
         public IAuthentificationInfo AuthentificationInfo => Server.AuthentificationInfo;
 
@@ -204,125 +270,66 @@ namespace StarWindXExtLib
 
         #endregion Async
 
-        public IEnumerable<ITargetExt> Targets => Server.Targets.Cast<ITarget>().Select(target => target.ToExt());
-
-        public IEnumerable<IDeviceExt> Devices => Server.Devices.Cast<IDevice>().Select(device => device.ToExt());
-
-        public IDeviceExt GetDeviceByID(string DeviceId)
-        {
-            return Server.GetDeviceByID(DeviceId).ToExt();
-        }
-
-        public IDeviceExt CreateDevice(string Path, string Name, STARWIND_DEVICE_TYPE fileType, Parameters builder)
-        {
-            return Server.CreateDevice(Path, Name, fileType, builder).ToExt();
-        }
-
-        public ITargetExt CreateTarget(string targetAlias, string TargetName, Parameters builder)
-        {
-            return Server.CreateTarget(targetAlias, TargetName, builder).ToExt();
-        }
-
         #region IValues
 
-        public IValue<int> LogLevel { get; } = new IntValue();
-        public IValue<string> LogMask { get; } = new StringValue();
-        public IValue<int> LogRotateSize { get; } = new IntValue();
-        public IValue<int> LogRotateKeepLastFiles { get; } = new IntValue();
-        public IValue<int> UpdatePeriod { get; } = new IntValue();
-        public IValue<string> UpdateHost { get; } = new StringValue();
-        public IValue<string> UpdatePage { get; } = new StringValue();
-        public IValue<int> UpdatePort { get; } = new IntValue();
-        public IValue<string> UpdateCopyId { get; } = new StringValue();
-        public IValue<string> UpdateLastRequest { get; } = new StringValue();
-        public IValue<bool> WUSCEnabled { get; } = new BoolValue();
-        public IValue<bool> SrvWasDisabled { get; } = new BoolValue();
-        public IValue<int> SrvRestoreStartType { get; } = new IntValue();
-        public IValue<bool> VaaiExCopyEnabled { get; } = new BoolValue();
-        public IValue<bool> VaaiCawEnabled { get; } = new BoolValue();
-        public IValue<bool> VaaiWriteSameEnabled { get; } = new BoolValue();
-        public IValue<bool> OdxEnabled { get; } = new BoolValue();
-        public IValue<int> OdxOptimalRodSizeMB { get; } = new IntValue();
-        public IValue<int> OdxMaximumRodSizeMB { get; } = new IntValue();
-        public IValue<int> OdxRodTokenDefaultTimeoutSec { get; } = new IntValue();
-        public IValue<int> OdxRodTokenMaximumTimeoutSec { get; } = new IntValue();
-        public IValue<int> PortValue { get; } = new IntValue("Port");
-        public IValue<string> Interface { get; } = new StringValue();
-        public IValue<bool> BCastEnable { get; } = new BoolValue();
-        public IValue<string> BCastInterface { get; } = new StringValue();
-        public IValue<int> BCastPort { get; } = new IntValue();
-        public IValue<string> Login { get; } = new StringValue();
-        public IValue<string> Password { get; } = new StringValue();
-        public IValue<int> MinBufferSize { get; } = new IntValue();
-        public IValue<string> AlignmentMask { get; } = new StringValue();
-        public IValue<int> MaxPendingRequests { get; } = new IntValue();
-        public IValue<int> iScsiPingPeriod { get; } = new IntValue();
-        public IValue<int> iScsiDiscoveryListInterfaces { get; } = new IntValue();
-        public IValue<int> ServerIoWorkersCount { get; } = new IntValue();
-        public IValue<int> ServerIoWorkersConcurency { get; } = new IntValue();
-        public IValue<int> CmdExecTimeWarningLimitInSec { get; } = new IntValue();
-        public IValue<int> iScisCmdSendCmdTimeoutInSec { get; } = new IntValue();
-        public IValue<string> iSerListen { get; } = new StringValue();
-        public IValue<string> LocalizationDir { get; } = new StringValue();
-        public IValue<string> DefaultStoragePoolPath { get; } = new StringValue();
-        public IValue<bool> ExperimentalLSFS { get; } = new BoolValue();
-        public IValue<string> ClusterName { get; } = new StringValue();
-        public IValue<string> ClusterGUID { get; } = new StringValue();
-        public IValue<int> ClusterSettingsVersion { get; } = new IntValue();
-        public IValue<string> ClusterNodes { get; } = new StringValue();
-        public IValue<string> ClusterSync { get; } = new StringValue();
-        public IValue<string> ClusterHeartbeat { get; } = new StringValue();
-        public IValue<string> DataBaseRoot { get; } = new StringValue();
-        public IValue<int> DBRotationDays { get; } = new IntValue();
-        public IValue<int> DBFileSizeDays { get; } = new IntValue();
-        public IValue<bool> PerformanceMonitorEnabled { get; } = new BoolValue();
-        public IValue<string> PerformanceRoot { get; } = new StringValue();
-        public IValue<int> FSMThresholdPercent { get; } = new IntValue();
-        public IValue<int> FSMCheckPeriodSeconds { get; } = new IntValue();
-        public IValue<bool> FSMEnabled { get; } = new BoolValue();
+        public IIntValue LogLevel { get; } = new IntValue();
+        public IStringValue LogMask { get; } = new StringValue();
+        public IIntValue LogRotateSize { get; } = new IntValue();
+        public IIntValue LogRotateKeepLastFiles { get; } = new IntValue();
+        public IIntValue UpdatePeriod { get; } = new IntValue();
+        public IStringValue UpdateHost { get; } = new StringValue();
+        public IStringValue UpdatePage { get; } = new StringValue();
+        public IIntValue UpdatePort { get; } = new IntValue();
+        public IStringValue UpdateCopyId { get; } = new StringValue();
+        public IStringValue UpdateLastRequest { get; } = new StringValue();
+        public IBoolValue WUSCEnabled { get; } = new BoolValue();
+        public IBoolValue SrvWasDisabled { get; } = new BoolValue();
+        public IIntValue SrvRestoreStartType { get; } = new IntValue();
+        public IBoolValue VaaiExCopyEnabled { get; } = new BoolValue();
+        public IBoolValue VaaiCawEnabled { get; } = new BoolValue();
+        public IBoolValue VaaiWriteSameEnabled { get; } = new BoolValue();
+        public IBoolValue OdxEnabled { get; } = new BoolValue();
+        public IIntValue OdxOptimalRodSizeMB { get; } = new IntValue();
+        public IIntValue OdxMaximumRodSizeMB { get; } = new IntValue();
+        public IIntValue OdxRodTokenDefaultTimeoutSec { get; } = new IntValue();
+        public IIntValue OdxRodTokenMaximumTimeoutSec { get; } = new IntValue();
+        public IIntValue PortValue { get; } = new IntValue("Port");
+        public IStringValue Interface { get; } = new StringValue();
+        public IBoolValue BCastEnable { get; } = new BoolValue();
+        public IStringValue BCastInterface { get; } = new StringValue();
+        public IIntValue BCastPort { get; } = new IntValue();
+        public IStringValue Login { get; } = new StringValue();
+        public IStringValue Password { get; } = new StringValue();
+        public IIntValue MinBufferSize { get; } = new IntValue();
+        public IStringValue AlignmentMask { get; } = new StringValue();
+        public IIntValue MaxPendingRequests { get; } = new IntValue();
+        public IIntValue iScsiPingPeriod { get; } = new IntValue();
+        public IIntValue iScsiDiscoveryListInterfaces { get; } = new IntValue();
+        public IIntValue ServerIoWorkersCount { get; } = new IntValue();
+
+        public IIntValue ServerIoWorkersConcurency { get; } = new IntValue();
+
+        // public IIntValue CmdExecTimeWarningLimitInSec { get; } = new IntValue();
+        // public IIntValue iScisCmdSendCmdTimeoutInSec { get; } = new IntValue();
+        public IStringValue iSerListen { get; } = new StringValue();
+        public IStringValue LocalizationDir { get; } = new StringValue();
+        public IStringValue DefaultStoragePoolPath { get; } = new StringValue();
+        public IBoolValue ExperimentalLSFS { get; } = new BoolValue();
+        public IStringValue ClusterName { get; } = new StringValue();
+        public IStringValue ClusterGUID { get; } = new StringValue();
+        public IIntValue ClusterSettingsVersion { get; } = new IntValue();
+        public IStringValue ClusterNodes { get; } = new StringValue();
+        public IStringValue ClusterSync { get; } = new StringValue();
+        public IStringValue ClusterHeartbeat { get; } = new StringValue();
+        public IStringValue DataBaseRoot { get; } = new StringValue();
+        public IIntValue DBRotationDays { get; } = new IntValue();
+        public IIntValue DBFileSizeDays { get; } = new IntValue();
+        public IBoolValue PerformanceMonitorEnabled { get; } = new BoolValue();
+        public IStringValue PerformanceRoot { get; } = new StringValue();
+        public IIntValue FSMThresholdPercent { get; } = new IntValue();
+        public IIntValue FSMCheckPeriodSeconds { get; } = new IntValue();
+        public IBoolValue FSMEnabled { get; } = new BoolValue();
 
         #endregion IValues
-
-        public StarWindServerExt(IStarWindServer server)
-        {
-            Server = server;
-            foreach (var prop in GetType().GetProperties()) {
-                if (!prop.PropertyType.GetInterfaces().Contains(typeof(IAbstactValue))) { continue; }
-                if (!prop.CanRead) { continue; }
-                if (prop.GetValue(this) is IAbstactValue value) {
-                    value.Server = this;
-                }
-            }
-        }
-
-        public StarWindServerExt(string ip, int port)
-            : this(Component.CreateServer(ip, port)) { }
-
-        public static STARWIND_DEVICE_TYPE GetDeviceType(string deviceType)
-        {
-            if (deviceType == "Image file") {
-                return STARWIND_DEVICE_TYPE.STARWIND_IMAGE_DEVICE;
-            }
-            if (deviceType == "RAM disk") {
-                return STARWIND_DEVICE_TYPE.STARWIND_RAM_DEVICE;
-            }
-            if (deviceType == "LSFS Disk") {
-                return STARWIND_DEVICE_TYPE.STARWIND_DD_LSFS_DEVICE;
-            }
-
-            // ...
-            if (deviceType == "DiskBridge") {
-                return STARWIND_DEVICE_TYPE.STARWIND_CUSTOM_DEVICE;
-            }
-            if (deviceType == "Control Device") {
-                return STARWIND_DEVICE_TYPE.STARWIND_CUSTOM_DEVICE;
-            }
-            return STARWIND_DEVICE_TYPE.STARWIND_CUSTOM_DEVICE;
-        }
-
-        public static string GetServerName(IStarWindServerExt server)
-        {
-            return "_" + server.IP.Replace('.', '_') + "_" + server.Port.ToString();
-        }
     }
 }

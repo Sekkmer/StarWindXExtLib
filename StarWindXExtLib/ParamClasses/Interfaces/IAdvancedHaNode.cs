@@ -2,7 +2,6 @@
 
 namespace StarWindXExtLib
 {
-
     public interface IAdvancedHANode : ICache
     {
         int NodeId { get; }

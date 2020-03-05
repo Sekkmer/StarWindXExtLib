@@ -1,6 +1,5 @@
 ﻿namespace StarWindXExtLib
 {
-
     public interface ILsfsDeviceCreator : ISimpleDeviceCreator
     {
         bool SupportDeletion { get; set; }

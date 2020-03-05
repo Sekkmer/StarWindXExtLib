@@ -6,7 +6,7 @@ namespace StarWindXView
     {
         internal static string GetServerName(IStarWindServerExt server)
         {
-            return server.IP + ":" + server.Port.ToString();
+            return server.IP + ":" + server.Port;
         }
     }
 }

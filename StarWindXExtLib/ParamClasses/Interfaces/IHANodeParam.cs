@@ -2,7 +2,6 @@
 
 namespace StarWindXExtLib
 {
-
     public interface IHANodeParam : ICache
     {
         string HostName { get; set; }
@@ -29,6 +28,6 @@ namespace StarWindXExtLib
         string MChapSecret { get; set; }
         string PoolName { get; set; }
 
-        void SetServer(IStarWindServer server);
+        void SetServer(IStarWindServerExt server);
     }
 }

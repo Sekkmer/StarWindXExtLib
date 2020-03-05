@@ -2,9 +2,21 @@
 
 namespace StarWindXExtLib
 {
-
     public class HADeviceCreator : ParameterAppender, IHADeviceCreator
     {
+        private bool enableThirdNode;
+
+        [EnableParam("partner2")]
+        public bool EnableThirdNode
+        {
+            get => enableThirdNode;
+            set
+            {
+                enableThirdNode = value;
+                if (value && ThirdNode is null) ThirdNode = new HANodeParam();
+            }
+        }
+
         public string Path => FirstNode.Path;
 
         public string Name => FirstNode.BaseName;
@@ -17,18 +29,6 @@ namespace StarWindXExtLib
 
         [FlatParam] public IHANodeParam FirstNode { get; } = new HANodeParam();
         [SubParam("partner1")] public IHANodeParam SecondNode { get; } = new HANodeParam();
-        [SubParam(false, "partner2")] public IHANodeParam ThirdNode { get; private set; } = null;
-
-        private bool enableThirdNode = false;
-
-        [EnableParam("partner2")]
-        public bool EnableThirdNode {
-            get => enableThirdNode; set {
-                enableThirdNode = value;
-                if (value && ThirdNode is null) {
-                    ThirdNode = new HANodeParam();
-                }
-            }
-        }
+        [SubParam(false, "partner2")] public IHANodeParam ThirdNode { get; private set; }
     }
 }

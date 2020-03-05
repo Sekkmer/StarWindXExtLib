@@ -3,11 +3,12 @@ using System.Runtime.CompilerServices;
 
 namespace StarWindXExtLib
 {
-
-    internal class IntValue : AbstactValue<int>
+    public interface IIntValue : IValue<int> { }
+    internal class IntValue : AbstractValue<int>, IIntValue
     {
-
-        public IntValue([CallerMemberName]string name = null) : base(name) { }
+        public IntValue([CallerMemberName] string name = null) : base(name)
+        {
+        }
 
         protected override int FromString(string value)
         {
@@ -21,10 +22,13 @@ namespace StarWindXExtLib
 
         protected override bool IsValid(string str)
         {
-            try {
+            try
+            {
                 Convert.ToInt32(str);
                 return true;
-            } catch (Exception) {
+            }
+            catch (Exception)
+            {
                 return false;
             }
         }

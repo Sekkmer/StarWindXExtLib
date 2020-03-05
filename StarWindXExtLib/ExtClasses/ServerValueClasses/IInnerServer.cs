@@ -1,13 +1,11 @@
-﻿using StarWindXLib;
-
-using System;
+﻿using System;
+using System.ComponentModel;
 
 namespace StarWindXExtLib
 {
-
-    public interface IAbstactValue
+    public interface IAbstractValue : INotifyPropertyChanged
     {
-        IStarWindServer Server { get; set; }
+        IStarWindServerExt Server { get; set; }
         string Name { get; }
         bool Valid { get; }
         Type ValueType { get; }

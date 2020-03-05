@@ -2,7 +2,6 @@
 
 namespace StarWindXExtLib
 {
-
     public class ImageFileCreator : ParameterAppender, IImageFileCreator
     {
         public STARWIND_FILE_TYPE FileType => STARWIND_FILE_TYPE.STARWIND_IMAGE_FILE;
@@ -11,8 +10,7 @@ namespace StarWindXExtLib
 
         public string Name { get; set; }
 
-        [Param]
-        public int Size { get; set; }
+        [Param] public int Size { get; set; }
 
         [Param]
         [BoolToString("True", "False")]
@@ -35,10 +33,8 @@ namespace StarWindXExtLib
         [EnableParam("Username", "Password")]
         public bool Encrypted { get; set; } = false;
 
-        [Param(false)]
-        public string Username { get; set; } = "";
+        [Param(false)] public string Username { get; set; } = "";
 
-        [Param(false)]
-        public string Password { get; set; } = "";
+        [Param(false)] public string Password { get; set; } = "";
     }
 }

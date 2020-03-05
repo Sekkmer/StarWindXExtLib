@@ -1,6 +1,5 @@
 ﻿namespace StarWindXExtLib
 {
-
     public interface IDDFileCreator : IFileCreator
     {
         int BlockSize { get; set; }

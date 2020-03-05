@@ -1,20 +1,18 @@
-﻿using StarWindXLib;
-
-using System;
+﻿using System;
 using System.Collections.Generic;
+using StarWindXLib;
 
 namespace StarWindXExtLib
 {
-
     internal class HAParnerExt : IHAPartnerExt
     {
-        private IHADeviceExt Device { get; }
-
         internal HAParnerExt(IHADeviceExt device, int partnerId)
         {
             Device = device;
             PartnerId = partnerId;
         }
+
+        private IHADeviceExt Device { get; }
 
         public int PartnerId { get; }
 
@@ -26,7 +24,8 @@ namespace StarWindXExtLib
 
         public string StorageDeviceType => Device.GetPartnerStorageDeviceType(PartnerId);
 
-        public IEnumerable<IHANetworkInterface> SynchronizationChannels => Device.GetPartnerSynchronizationChannels(PartnerId);
+        public IEnumerable<IHANetworkInterface> SynchronizationChannels =>
+            Device.GetPartnerSynchronizationChannels(PartnerId);
 
         public IEnumerable<IHANetworkInterface> HeartbeatChannels => Device.GetPartnerHeartbeatChannels(PartnerId);
 

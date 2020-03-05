@@ -1,12 +1,12 @@
-﻿using StarWindXLib;
-
-namespace StarWindXExtLib
+﻿namespace StarWindXExtLib
 {
-
     public interface IFlashCache
     {
+        /// <summary>
+        ///     Name of an IDevice
+        /// </summary>
         string FlashStorage { get; }
 
-        string SetFlashCache(IDevice device);
+        string SetFlashCache(IDeviceExt device);
     }
 }

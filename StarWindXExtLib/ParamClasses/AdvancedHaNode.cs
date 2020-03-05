@@ -1,11 +1,18 @@
-﻿using System.Collections.Generic;
-using System.Windows.Forms;
+﻿using System;
+using System.Collections.Generic;
 
 namespace StarWindXExtLib
 {
-
     public class AdvancedHANode : IAdvancedHANode
     {
+        private NodeType nodeType = NodeType.Synchronous;
+
+        public AdvancedHANode(int id)
+        {
+            NodeId = id;
+        }
+
+        public string TaskValue => Task.Value;
         public int NodeId { get; }
 
         public bool IsAutoSynchEnabled { get; set; } = true;
@@ -14,11 +21,15 @@ namespace StarWindXExtLib
         public int Offset { get; set; } = 0;
         public FailoverConfType FailoverConfType { get; set; } = FailoverConfType.Heartbeat;
         public int Priority { get; set; }
-        private NodeType nodeType = NodeType.Synchronous;
 
-        public NodeType NodeType {
+        public NodeType NodeType
+        {
             get => nodeType;
-            set { nodeType = value; Task.NodeType = value; }
+            set
+            {
+                nodeType = value;
+                Task.NodeType = value;
+            }
         }
 
         public string TargetName { get; set; }
@@ -32,30 +43,25 @@ namespace StarWindXExtLib
         public string JournalStorage { get; set; } = "";
 
         public IHATask Task { get; } = new HATask();
-        public string TaskValue => Task.Value;
 
         public Dictionary<int, List<string>> PartnerIP { get; } = new Dictionary<int, List<string>>();
 
         public string GetValue(string name)
         {
             var obj = GetType().GetProperty(name).GetValue(this);
-            if (obj is string str) {
+            if (obj is string str)
                 return str;
-            } else if (obj is NodeType type) {
+            if (obj is NodeType type)
                 return EnumFormat.EnumToString(type);
-            } else {
-                try {
-                    return obj.ToString();
-                } catch (System.Exception e) {
-                    MessageBox.Show(name + "\n\n" + e.Message);
-                    throw;
-                }
+            try
+            {
+                return obj.ToString();
             }
-        }
-
-        public AdvancedHANode(int id)
-        {
-            NodeId = id;
+            catch (Exception e)
+            {
+                Console.WriteLine(name + "\n\n" + e.Message);
+                throw;
+            }
         }
     }
 }

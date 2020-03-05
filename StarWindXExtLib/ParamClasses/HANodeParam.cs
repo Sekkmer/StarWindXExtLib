@@ -2,9 +2,9 @@
 
 namespace StarWindXExtLib
 {
-
     public class HANodeParam : IHANodeParam
     {
+        [Param] public int Type => (int) StorageType;
         [Param] public string HostName { get; set; }
         [Param] public int PortNumber { get; set; } = 3261;
         [Param] public string UserName { get; set; } = "root";
@@ -12,7 +12,6 @@ namespace StarWindXExtLib
         [Param] public int Size { get; set; }
         [Param] public string Path { get; set; }
         [Param] public string BaseName { get; set; }
-        [Param] public int Type => (int)StorageType;
 
         public STARWIND_FILE_TYPE StorageType { get; set; }
 
@@ -33,7 +32,7 @@ namespace StarWindXExtLib
         [Param] public string PoolName { get; set; } = "Default";
         [FlatParam] public ICacheParam Cache { get; } = new CacheParam();
 
-        public void SetServer(IStarWindServer server)
+        public void SetServer(IStarWindServerExt server)
         {
             HostName = server.IP;
             PortNumber = server.Port;

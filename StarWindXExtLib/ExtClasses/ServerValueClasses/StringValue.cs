@@ -2,11 +2,11 @@
 
 namespace StarWindXExtLib
 {
+    public interface IStringValue : IValue<string> { }
 
-    internal class StringValue : AbstactValue<string>
+    internal class StringValue : AbstractValue<string>, IStringValue
     {
-
-        public StringValue([CallerMemberName]string name = null) : base(name)
+        public StringValue([CallerMemberName] string name = null) : base(name)
         {
         }
 

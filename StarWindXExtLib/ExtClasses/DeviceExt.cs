@@ -1,12 +1,12 @@
-﻿using StarWindXLib;
-
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using StarWindXLib;
 
 namespace StarWindXExtLib
 {
     internal class DeviceExt : IDeviceExt
     {
+        private static readonly DateTime epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
         private readonly IDevice device;
 
         public DeviceExt(IDevice device)
@@ -14,7 +14,66 @@ namespace StarWindXExtLib
             this.device = device;
         }
 
+        public int SectorSize => device.SectorSize;
+
+        public CacheMode CacheModeEnum => EnumFormat.ToCacheMode(device.CacheMode);
+
+        public int PhySectorSize => GetPropertyValueAsInt("PhySectorSize");
+
+        public string ParentDevice => GetPropertyValue("parent");
+
+        public string DeviceHeaderPath => GetPropertyValue("DeviceHeaderPath");
+
+        public int L1CachePercentOfUsage => GetPropertyValueAsInt("L1CachePercentOfUsage");
+
+        public int L1CachePercentOfHits => GetPropertyValueAsInt("L1CachePercentOfHits");
+
+        public string Path => File.Substring(0, File.LastIndexOf('/'));
+
+        public bool Attached => device.TargetId != "empty";
+
         protected event EventHandler Refreshed;
+
+        protected int GetPropertyValueAsInt(string propertyName)
+        {
+            var str = GetPropertyValue(propertyName);
+            if (string.IsNullOrEmpty(str)) return 0;
+            try
+            {
+                return Convert.ToInt32(str);
+            }
+            catch (FormatException)
+            {
+                return 0;
+            }
+            catch (OverflowException)
+            {
+                return 0;
+            }
+        }
+
+        protected bool GetPropertyValueAsBool(string propertyName, string trueString = "yes")
+        {
+            return GetPropertyValue(propertyName) == trueString;
+        }
+
+        protected DateTime? GetPropertyValueAsDateTime(string propertyName)
+        {
+            var value = GetPropertyValueAsInt(propertyName);
+            if (value == 0) return null;
+            return FromUnixTime(value);
+        }
+
+        protected TimeSpan GetPropertyValueAsTimeSpan(string propertyName)
+        {
+            return TimeSpan.FromSeconds(GetPropertyValueAsInt(propertyName));
+        }
+
+        private static DateTime FromUnixTime(int value)
+        {
+            var offset = TimeZoneInfo.Local.GetUtcOffset(DateTime.UtcNow);
+            return epoch.Add(offset).AddSeconds(value);
+        }
 
         #region IDevice
 
@@ -100,61 +159,5 @@ namespace StarWindXExtLib
         }
 
         #endregion Async
-
-        public int SectorSize => device.SectorSize;
-
-        public CacheMode CacheModeEnum => EnumFormat.ToCacheMode(device.CacheMode);
-
-        public int PhySectorSize => GetPropertyValueAsInt("PhySectorSize");
-
-        public string ParentDevice => GetPropertyValue("parent");
-
-        public string DeviceHeaderPath => GetPropertyValue("DeviceHeaderPath");
-
-        public int L1CachePercentOfUsage => GetPropertyValueAsInt("L1CachePercentOfUsage");
-
-        public int L1CachePercentOfHits => GetPropertyValueAsInt("L1CachePercentOfHits");
-
-        public string Path => File.Substring(0, File.LastIndexOf('/'));
-
-        public bool Attached => device.TargetId != "empty";
-
-        protected int GetPropertyValueAsInt(string propertyName)
-        {
-            var str = GetPropertyValue(propertyName);
-            if (string.IsNullOrEmpty(str)) { return 0; }
-            try {
-                return Convert.ToInt32(str);
-            } catch (FormatException) {
-                return 0;
-            } catch (OverflowException) {
-                return 0;
-            }
-        }
-
-        protected bool GetPropertyValueAsBool(string propertyName, string trueString = "yes")
-        {
-            return GetPropertyValue(propertyName) == trueString;
-        }
-
-        protected DateTime? GetPropertyValueAsDateTime(string propertyName)
-        {
-            var value = GetPropertyValueAsInt(propertyName);
-            if (value == 0) { return null; }
-            return FromUnixTime(value);
-        }
-
-        protected TimeSpan GetPropertyValueAsTimeSpan(string propertyName)
-        {
-            return TimeSpan.FromSeconds(GetPropertyValueAsInt(propertyName));
-        }
-
-        private static DateTime FromUnixTime(int value)
-        {
-            var offset = TimeZoneInfo.Local.GetUtcOffset(DateTime.UtcNow);
-            return epoch.Add(offset).AddSeconds(value);
-        }
-
-        private static readonly DateTime epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
     }
 }
