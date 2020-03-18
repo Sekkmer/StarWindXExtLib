@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StarWindXLib;
+using System;
 
 namespace StarWindXExtLib
 {
@@ -27,17 +28,18 @@ namespace StarWindXExtLib
         }
 
 
-        public NodeType NodeType { get; set; } = NodeType.Synchronous;
+        public SW_HA_NODE_TYPE NodeType { get; set; } = SW_HA_NODE_TYPE.SW_HA_NODE_TYPE_SYNC;
 
         public int NodeTypeInt
         {
             get
             {
+                // TODO test this
                 return NodeType switch
                 {
-                    NodeType.Synchronous => 5,
-                    NodeType.Asynchronous => 4,
-                    NodeType.Witness => 0,
+                    SW_HA_NODE_TYPE.SW_HA_NODE_TYPE_SYNC => 5,
+                    SW_HA_NODE_TYPE.SW_HA_NODE_TYPE_ASYNC => 4,
+                    SW_HA_NODE_TYPE.SW_HA_NODE_TYPE_WITNESS => 0,
                     _ => -1
                 };
             }

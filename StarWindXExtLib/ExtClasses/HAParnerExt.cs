@@ -20,7 +20,7 @@ namespace StarWindXExtLib
 
         public int Priority => Device.GetPartnerPriority(PartnerId);
 
-        public NodeType Type => Device.GetPartnerType(PartnerId);
+        public SW_HA_NODE_TYPE Type => Device.GetPartnerType(PartnerId);
 
         public string StorageDeviceType => Device.GetPartnerStorageDeviceType(PartnerId);
 

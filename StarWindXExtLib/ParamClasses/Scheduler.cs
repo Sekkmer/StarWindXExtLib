@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StarWindXLib;
+using System;
 
 namespace StarWindXExtLib
 {
@@ -6,9 +7,9 @@ namespace StarWindXExtLib
     {
         [Param("device")] public string DeviceId => Device.DeviceId;
 
-        [EnableParam("preserve")] public bool AsyncMode => Device.NodeType == NodeType.Asynchronous;
+        [EnableParam("preserve")] public bool AsyncMode => Device.NodeType == SW_HA_NODE_TYPE.SW_HA_NODE_TYPE_ASYNC;
 
-        [EnableParam("first", "period")] public bool SyncMode => Device.NodeType == NodeType.Synchronous;
+        [EnableParam("first", "period")] public bool SyncMode => Device.NodeType == SW_HA_NODE_TYPE.SW_HA_NODE_TYPE_SYNC;
 
         public string Command => "schedule";
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using StarWindXLib;
+using System.Collections.Generic;
 
 namespace StarWindXExtLib
 {
@@ -11,7 +12,7 @@ namespace StarWindXExtLib
         int Offset { get; set; }
         FailoverConfType FailoverConfType { get; set; }
         int Priority { get; set; }
-        NodeType NodeType { get; set; }
+        SW_HA_NODE_TYPE NodeType { get; set; }
         string TargetName { get; set; }
         string AuthChapLogin { get; set; }
         string AuthChapPassword { get; set; }

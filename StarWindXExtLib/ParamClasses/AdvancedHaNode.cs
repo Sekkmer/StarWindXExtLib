@@ -1,11 +1,12 @@
-﻿using System;
+﻿using StarWindXLib;
+using System;
 using System.Collections.Generic;
 
 namespace StarWindXExtLib
 {
     public class AdvancedHANode : IAdvancedHANode
     {
-        private NodeType nodeType = NodeType.Synchronous;
+        private SW_HA_NODE_TYPE nodeType = SW_HA_NODE_TYPE.SW_HA_NODE_TYPE_SYNC;
 
         public AdvancedHANode(int id)
         {
@@ -22,7 +23,7 @@ namespace StarWindXExtLib
         public FailoverConfType FailoverConfType { get; set; } = FailoverConfType.Heartbeat;
         public int Priority { get; set; }
 
-        public NodeType NodeType
+        public SW_HA_NODE_TYPE NodeType
         {
             get => nodeType;
             set
@@ -51,7 +52,7 @@ namespace StarWindXExtLib
             var obj = GetType().GetProperty(name).GetValue(this);
             if (obj is string str)
                 return str;
-            if (obj is NodeType type)
+            if (obj is SW_HA_NODE_TYPE type)
                 return EnumFormat.EnumToString(type);
             try
             {

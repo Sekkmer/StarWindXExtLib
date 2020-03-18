@@ -1,24 +1,18 @@
-﻿namespace StarWindXExtLib
+﻿using System;
+
+namespace StarWindXExtLib
 {
-    public enum NodeType
-    {
-        [StringValue("1")] Synchronous = 1,
-
-        [StringValue("2")] Asynchronous = 2,
-
-        [StringValue("8")] Witness = 8
-    }
 
     public static partial class EnumFormat
     {
-        public static string ToString(this NodeType type)
+        public static string ToString(this StarWindXLib.SW_HA_NODE_TYPE type)
         {
-            return EnumToString(type);
+            return ((int)type).ToString();
         }
 
-        public static void FromString(this NodeType type, string str)
+        public static void FromString(ref this StarWindXLib.SW_HA_NODE_TYPE type, string str)
         {
-            EnumFromString(type, str);
+            type = (StarWindXLib.SW_HA_NODE_TYPE) Enum.Parse(type.GetType(), str);
         }
     }
 }

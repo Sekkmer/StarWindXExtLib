@@ -103,6 +103,11 @@ namespace StarWindXExtLib
             device.DeleteSnapshot(snapshotID);
         }
 
+        public void EnableCache(bool endable)
+        {
+            device.EnableCache(endable);
+        }
+
         public string Name => device.Name;
 
         public string DeviceType => device.DeviceType;

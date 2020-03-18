@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StarWindXLib;
+using System;
 
 namespace StarWindXExtLib
 {
@@ -6,7 +7,7 @@ namespace StarWindXExtLib
     {
         string Value { get; }
 
-        NodeType NodeType { get; set; }
+        SW_HA_NODE_TYPE NodeType { get; set; }
         int NodeTypeInt { get; }
         DateTime Time { get; set; }
         int Unknown1 { get; set; }

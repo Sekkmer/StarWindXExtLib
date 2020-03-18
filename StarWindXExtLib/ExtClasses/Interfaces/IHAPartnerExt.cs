@@ -9,7 +9,7 @@ namespace StarWindXExtLib
         int PartnerId { get; }
         string TargetName { get; }
         int Priority { get; }
-        NodeType Type { get; }
+        SW_HA_NODE_TYPE Type { get; }
         string StorageDeviceType { get; }
         IEnumerable<IHANetworkInterface> SynchronizationChannels { get; }
         IEnumerable<IHANetworkInterface> HeartbeatChannels { get; }

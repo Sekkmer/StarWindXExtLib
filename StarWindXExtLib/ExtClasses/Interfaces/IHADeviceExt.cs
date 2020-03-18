@@ -35,7 +35,6 @@ namespace StarWindXExtLib
         DateTime? TrackerReplicated { get; }
         string TrackerReplicating { get; }
         DateTime? TrackerScheduled { get; }
-        NodeType NodeType { get; }
         FailoverConfType FailoverConfigType { get; }
 
         IEnumerable<IHAPartnerExt> PartnersExt { get; }
@@ -56,7 +55,7 @@ namespace StarWindXExtLib
 
         int GetPartnerPriority(int node);
 
-        NodeType GetPartnerType(int node);
+        SW_HA_NODE_TYPE GetPartnerType(int node);
 
         string GetPartnerStorageDeviceType(int node);
 

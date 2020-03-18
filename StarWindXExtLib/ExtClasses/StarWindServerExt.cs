@@ -249,6 +249,8 @@ namespace StarWindXExtLib
 
         public ICollection NumaNodes => Server.NumaNodes;
 
+        public ISystemInfo SystemInfo => Server.SystemInfo;
+
         #endregion IStarWindServer
 
         #region Async

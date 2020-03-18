@@ -80,8 +80,6 @@ namespace StarWindXExtLib
 
         public DateTime? TrackerScheduled => GetPropertyValueAsDateTime("ha_tracker_scheduled");
 
-        public NodeType NodeType => (NodeType) GetPropertyValueAsInt("ha_node_type");
-
         public FailoverConfType FailoverConfigType =>
             (FailoverConfType) GetPropertyValueAsInt("ha_failover_config_type");
 
@@ -195,11 +193,15 @@ namespace StarWindXExtLib
 
         public bool IsWaitingAutosync => haDevice.IsWaitingAutosync;
 
+        public SW_HA_NODE_TYPE NodeType => haDevice.NodeType;
+
         public int SyncTrafficShare
         {
             get => haDevice.SyncTrafficShare;
             set => haDevice.SyncTrafficShare = value;
         }
+
+        public SW_HA_FAILOVER_STRATEGY FailoverStrategy => haDevice.FailoverStrategy;
 
         #endregion HADevice
 
@@ -215,9 +217,9 @@ namespace StarWindXExtLib
             return GetPartnerParameterAsInt("priority", node);
         }
 
-        public NodeType GetPartnerType(int node)
+        public SW_HA_NODE_TYPE GetPartnerType(int node)
         {
-            return (NodeType) GetPartnerParameterAsInt("type", node);
+            return (SW_HA_NODE_TYPE) GetPartnerParameterAsInt("type", node);
         }
 
         public string GetPartnerStorageDeviceType(int node)
