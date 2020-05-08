@@ -13,7 +13,7 @@ namespace StarWindXExtLib
 
         public void AppendParam(string paramName, string paramValue)
         {
-            AdditionalParams.Add(new Param {Name = paramName, Value = paramValue});
+            AdditionalParams.Add(new Param { Name = paramName, Value = paramValue });
         }
 
         public void AppendParams(IParameters pars)
@@ -47,7 +47,7 @@ namespace StarWindXExtLib
                 bool _ => throw new Exception(),
                 int i when i == 0 && info.GetCustomAttribute<IntZeroAttribute>(true) is { } attr => attr.Value,
                 int i => i.ToString(),
-                DateTime date => ((DateTimeOffset) date).ToUnixTimeSeconds().ToString(),
+                DateTime date => ((DateTimeOffset)date).ToUnixTimeSeconds().ToString(),
                 TimeSpan span => span.Seconds.ToString(),
                 _ when obj.GetType().BaseType == typeof(Enum) => EnumFormat.EnumToString(obj),
                 _ => obj.ToString()
@@ -61,7 +61,7 @@ namespace StarWindXExtLib
             bool IsEnabled(IConditional attr)
             {
                 if (attr.Enabled) return true;
-                return (bool) properties.Single(
+                return (bool)properties.Single(
                     info => info.GetCustomAttribute<EnableParamAttribute>(true)?.CheckName(attr.Name) ?? false
                 ).GetValue(obj);
             }
@@ -72,7 +72,16 @@ namespace StarWindXExtLib
                 if (info.GetCustomAttribute<ParamAttribute>(true) is { } attr)
                 {
                     if (IsEnabled(attr) && ToString(info, info.GetValue(obj)) is { } str)
+                    {
                         pars.AppendParam(prefix + attr.Name, str);
+                    }
+                }
+                else if (info.GetCustomAttribute<ParamValueAsNameAttribute>(true) is { } name)
+                {
+                    if (IsEnabled(name) && ToString(info, info.GetValue(obj)) is { } str)
+                    {
+                        pars.AppendParam(prefix + str, "");
+                    }
                 }
                 else if (info.GetCustomAttribute<FlatParamAttribute>(true) is { } flat)
                 {
