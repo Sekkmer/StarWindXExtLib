@@ -8,19 +8,23 @@ namespace StarWindXExtLib
     {
         internal static IDeviceExt ToExt(this IDevice device)
         {
-            if (device is IDeviceExt ext)
-                return ext;
-            if (device is IHADevice ha)
-                return new HADeviceExt(ha);
-            if (device is ILSFSDevice lsfs)
-                return new LSFSDeviceExt(lsfs);
-            return new DeviceExt(device);
+            return (device) switch
+            {
+                IDeviceExt ext => ext,
+                IHADevice ha => new HADeviceExt(ha),
+                ILSFSDevice lsfs => new LSFSDeviceExt(lsfs),
+                IVTLDevice vtl => new VTLDeviceExt(vtl),
+                _ => new DeviceExt(device)
+            };
         }
 
         internal static ITargetExt ToExt(this ITarget target)
         {
-            if (target is TargetExt ext) return ext;
-            return new TargetExt(target);
+            return (target) switch
+            {
+                ITargetExt ext => ext,
+                _ => new TargetExt(target)
+            };
         }
 
         public static IDeviceExt MountSnapshot(this IStarWindServer server, ILSFSDevice device, ISnapshot snapshot)
